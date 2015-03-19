@@ -13,6 +13,7 @@ pulse::pulse()
 	wordsPerMinute=10;
 	tDit=1200/wordsPerMinute;
 	tDah=3*tDit;
+	errorCheck=false;
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -115,7 +116,7 @@ void pulseInfo::setPulseWidthTime()
 	pulseWidthTime=stopTime-startTime;
 }
 
-char* pulse::decodeToDitDah()
+bool pulse::decodeToDitDah()
 {
 	
 	//find number of morse pulses
@@ -134,7 +135,7 @@ char* pulse::decodeToDitDah()
 			if(j>0)			//if not the first pulse
 			{
 			unsigned long timeWidth (morsePulses[i].startTime-morsePulses[i-1].stopTime) ;
-			if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return 0;
+			if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
 			}
 		}
 		if(morsePulses[i].pulseWidthTime > ((tDit+tDah)/2 ) )	//its a dah
@@ -146,5 +147,9 @@ char* pulse::decodeToDitDah()
 			DitDah[i]=1;
 		}
 	}
-	return DitDah;
+	return true;
+}
+void pulse::getDecodedData(char *buffer)
+{
+	for(int i=0;i<6;i++)buffer[i]=DitDah[i]+0x30;
 }

@@ -40,8 +40,9 @@ class pulse
 		pulse();
 		~pulse();
 		void init();
-		char* decodeToDitDah();	//decode received sequence of data to dit-dah
+		bool decodeToDitDah();	//decode received sequence of data to dit-dah
 		char receiveCode();
+		void getDecodedData(char *buffer);
 		
 	private:
 		char capture();						//capture pulse start & stop time in ms
