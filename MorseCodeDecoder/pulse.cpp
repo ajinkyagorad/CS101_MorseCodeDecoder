@@ -46,7 +46,7 @@ char pulse::capture()
 	while(true)									
 	{
 		pulseData.numberOfEdges=TCNT1;
-		_delay_ms(timeout);
+		delay(timeout);
 		if(pulseData.numberOfEdges == TCNT1)break;	//break only if counter value
 													//does not changes within timout
 	}
@@ -59,12 +59,25 @@ char pulse::capture()
 	}else{
 		flag=1;			//valid flag   : successful
 	}
+	pulseData.ifData=flag;			//say validity of pulse data
 	return flag;
 }
 
 char pulse::receiveCode()
 {
+	for(int i=0;i<6;)
+	{
+		if(capture())
+		{
+			morsePulses[i]=pulseData;
+			i++;						//increment only if valid data is received
+		}
 	
+	}
+}
+void pulse::delay(unsigned int time_ms)
+{
+	while(time_ms--)_delay_ms(1);
 }
 
 void pulseInfo::setPulseWidthTime()

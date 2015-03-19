@@ -56,7 +56,7 @@ unsigned long getSysTime()
 //FUNCTION  : getSysTimeRaw()
 //INPUT		: NONE
 //OUTPUT	: returns time ticks (raw counter values with overflows) after initialisation of sysTime
-unsigned long getSysTimeRaw()			//returns the raw countervalue
+unsigned long  getSysTimeRaw()			//returns the raw countervalue
 {
 	unsigned long temptime=TCNT3;					//get counter value at this state
 	return overflows*65536+temptime;				

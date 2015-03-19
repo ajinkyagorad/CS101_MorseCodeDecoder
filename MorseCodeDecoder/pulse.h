@@ -12,6 +12,7 @@
 #define	PULSE_H_
 
 #include "config.h"
+#include "systime.h"
 //pulseInfo holds start time and stop time in cpu counter clocks
 struct pulseInfo{
 	unsigned long startTime;	//start time in in cou counter clocks
@@ -28,7 +29,7 @@ class pulse
 	pulseInfo pulseData;						//current information about current pulse
 	pulseInfo morsePulses[6];					//array for 
 	char flag;									//flag for validity of data stored
-	const int timeout;						//timeout in milli second for receiving pulses
+	unsigned int timeout;						//timeout in milli second for receiving pulses
 	unsigned int thresholdTime;		//setting threshold time for noise removal
 	unsigned int tDit,tDah;
 	public:
@@ -37,8 +38,10 @@ class pulse
 		void init();
 		char* decodeToDitDah(pulseInfo * );	//decode received sequence of data to dit-dah
 		char receiveCode();
+		
 	private:
 		char capture();						//capture pulse start & stop time in ms
+		void delay(unsigned int time_ms);						//delay in ms
 	
 	};
 

@@ -13,6 +13,7 @@
 
 namespace systime{
 		unsigned long getSysTime();
+		unsigned long  getSysTimeRaw();
 		void sysTimeInit();
 		unsigned long getOverflows();
 };
