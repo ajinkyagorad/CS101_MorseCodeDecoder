@@ -7,8 +7,9 @@
 #include "pulse.h"
 pulse::pulse()
 {
-	pulseData.ifData=0;
-	
+	pulseData.ifData=0;		//set validity of data to invalid
+	timeout=2;
+	thresholdTime=20;
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -59,6 +60,11 @@ char pulse::capture()
 		flag=1;			//valid flag   : successful
 	}
 	return flag;
+}
+
+char pulse::receiveCode()
+{
+	
 }
 
 void pulseInfo::setPulseWidthTime()

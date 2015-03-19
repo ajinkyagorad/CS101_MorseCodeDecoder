@@ -28,14 +28,15 @@ class pulse
 	pulseInfo pulseData;						//current information about current pulse
 	pulseInfo morsePulses[6];					//array for 
 	char flag;									//flag for validity of data stored
-	const int timeout=2;						//timeout in milli second for receiving pulses
-	unsigned int thresholdTime=20;		//setting threshold time for noise removal
+	const int timeout;						//timeout in milli second for receiving pulses
+	unsigned int thresholdTime;		//setting threshold time for noise removal
+	unsigned int tDit,tDah;
 	public:
 		pulse();
 		~pulse();
 		void init();
 		char* decodeToDitDah(pulseInfo * );	//decode received sequence of data to dit-dah
-		char receiveCode()
+		char receiveCode();
 	private:
 		char capture();						//capture pulse start & stop time in ms
 	
