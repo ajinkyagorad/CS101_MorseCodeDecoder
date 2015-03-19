@@ -27,18 +27,20 @@ struct pulseInfo{
 class pulse
 {
 	pulseInfo pulseData;						//current information about current pulse
-	pulseInfo morsePulses[6];					//array for 
+	pulseInfo morsePulses[6];					//array for storing information about consecutive morse pulses
+	char DitDah[6];								//decoded sequence of dits and dahs
 	char flag;
 	bool isDitTimeout;									//flag for validity of data stored
 	unsigned int timeout;						//timeout in milli second for receiving pulses
 	unsigned int thresholdTime;		//setting threshold time for noise removal
 	unsigned int tDit,tDah;
 	unsigned int wordsPerMinute;
+	bool errorCheck;
 	public:
 		pulse();
 		~pulse();
 		void init();
-		char* decodeToDitDah(pulseInfo * );	//decode received sequence of data to dit-dah
+		char* decodeToDitDah();	//decode received sequence of data to dit-dah
 		char receiveCode();
 		
 	private:

@@ -1,15 +1,15 @@
 Archive member included because of file (symbol)
 
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fixunssfsi.o)
-                              systime.o (__fixunssfsi)
+                              pulse.o (__fixunssfsi)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(floatsisf.o)
-                              systime.o (__floatunsisf)
+                              pulse.o (__floatunsisf)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fp_split3.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fixunssfsi.o) (__fp_splitA)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fp_zero.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fixunssfsi.o) (__fp_zero)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(mulsf3.o)
-                              systime.o (__mulsf3)
+                              pulse.o (__mulsf3)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(mulsf3x.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(mulsf3.o) (__mulsf3x)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.1056/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.8.1/../../../../avr/lib/avr6\libm.a(fp_inf.o)
@@ -33,7 +33,7 @@ Discarded input sections
  .text          0x00000000        0x0 pulse.o
  .bss           0x00000000        0x0 pulse.o
  .text._ZN5pulseC2Ev
-                0x00000000       0x1c pulse.o
+                0x00000000       0x3a pulse.o
  .text._ZN5pulse4initEv
                 0x00000000       0x34 pulse.o
  .text._ZN5pulse5delayEj
@@ -41,9 +41,11 @@ Discarded input sections
  .text._ZN9pulseInfo17setPulseWidthTimeEv
                 0x00000000       0x14 pulse.o
  .text._ZN5pulse7captureEv
-                0x00000000       0xae pulse.o
+                0x00000000      0x136 pulse.o
  .text._ZN5pulse11receiveCodeEv
-                0x00000000       0x58 pulse.o
+                0x00000000       0x70 pulse.o
+ .text._ZN5pulse14decodeToDitDahEv
+                0x00000000      0x1e6 pulse.o
  .text          0x00000000        0x0 MorseCodeDecoder.o
  .bss           0x00000000        0x0 MorseCodeDecoder.o
  .text          0x00000000        0x0 systime.o
@@ -502,55 +504,55 @@ END GROUP
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000       0xa8
+.debug_aranges  0x00000000       0xb0
  *(.debug_aranges)
  .debug_aranges
-                0x00000000       0x48 pulse.o
+                0x00000000       0x50 pulse.o
  .debug_aranges
-                0x00000048       0x20 MorseCodeDecoder.o
+                0x00000050       0x20 MorseCodeDecoder.o
  .debug_aranges
-                0x00000068       0x40 systime.o
+                0x00000070       0x40 systime.o
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000      0x68b
+.debug_info     0x00000000      0x7a0
  *(.debug_info .gnu.linkonce.wi.*)
- .debug_info    0x00000000      0x4b3 pulse.o
- .debug_info    0x000004b3       0x7b MorseCodeDecoder.o
- .debug_info    0x0000052e      0x15d systime.o
+ .debug_info    0x00000000      0x5c8 pulse.o
+ .debug_info    0x000005c8       0x7b MorseCodeDecoder.o
+ .debug_info    0x00000643      0x15d systime.o
 
-.debug_abbrev   0x00000000      0x3bb
+.debug_abbrev   0x00000000      0x3f8
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x285 pulse.o
- .debug_abbrev  0x00000285       0x44 MorseCodeDecoder.o
- .debug_abbrev  0x000002c9       0xf2 systime.o
+ .debug_abbrev  0x00000000      0x2c2 pulse.o
+ .debug_abbrev  0x000002c2       0x44 MorseCodeDecoder.o
+ .debug_abbrev  0x00000306       0xf2 systime.o
 
-.debug_line     0x00000000      0x3c5
+.debug_line     0x00000000      0x4bc
  *(.debug_line .debug_line.* .debug_line_end)
- .debug_line    0x00000000      0x28d pulse.o
- .debug_line    0x0000028d       0x47 MorseCodeDecoder.o
- .debug_line    0x000002d4       0xf1 systime.o
+ .debug_line    0x00000000      0x384 pulse.o
+ .debug_line    0x00000384       0x47 MorseCodeDecoder.o
+ .debug_line    0x000003cb       0xf1 systime.o
 
-.debug_frame    0x00000000      0x158
+.debug_frame    0x00000000      0x204
  *(.debug_frame)
- .debug_frame   0x00000000       0xb0 pulse.o
- .debug_frame   0x000000b0       0x24 MorseCodeDecoder.o
- .debug_frame   0x000000d4       0x84 systime.o
+ .debug_frame   0x00000000      0x15c pulse.o
+ .debug_frame   0x0000015c       0x24 MorseCodeDecoder.o
+ .debug_frame   0x00000180       0x84 systime.o
 
-.debug_str      0x00000000      0x41a
+.debug_str      0x00000000      0x471
  *(.debug_str)
- .debug_str     0x00000000      0x339 pulse.o
-                                0x387 (size before relaxing)
- .debug_str     0x00000339       0x1f MorseCodeDecoder.o
+ .debug_str     0x00000000      0x399 pulse.o
+                                0x3e4 (size before relaxing)
+ .debug_str     0x00000399       0x1f MorseCodeDecoder.o
                                 0x194 (size before relaxing)
- .debug_str     0x00000358       0xc2 systime.o
+ .debug_str     0x000003b8       0xb9 systime.o
                                 0x264 (size before relaxing)
 
-.debug_loc      0x00000000      0x2d0
+.debug_loc      0x00000000      0x5de
  *(.debug_loc)
- .debug_loc     0x00000000      0x26d pulse.o
- .debug_loc     0x0000026d       0x63 systime.o
+ .debug_loc     0x00000000      0x57b pulse.o
+ .debug_loc     0x0000057b       0x63 systime.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -570,11 +572,11 @@ END GROUP
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000       0x78
+.debug_ranges   0x00000000       0xd0
  *(.debug_ranges)
- .debug_ranges  0x00000000       0x38 pulse.o
- .debug_ranges  0x00000038       0x10 MorseCodeDecoder.o
- .debug_ranges  0x00000048       0x30 systime.o
+ .debug_ranges  0x00000000       0x90 pulse.o
+ .debug_ranges  0x00000090       0x10 MorseCodeDecoder.o
+ .debug_ranges  0x000000a0       0x30 systime.o
 
 .debug_macro
  *(.debug_macro)

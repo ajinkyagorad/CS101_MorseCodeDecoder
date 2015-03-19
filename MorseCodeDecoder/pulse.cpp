@@ -12,6 +12,7 @@ pulse::pulse()
 	thresholdTime=20;
 	wordsPerMinute=10;
 	tDit=1200/wordsPerMinute;
+	tDah=3*tDit;
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -45,7 +46,7 @@ char pulse::capture()
 	//need to add time out checking
 	unsigned long temptime=systime::getSysTime();
 	while(TCNT1 == 0){
-		if(systime::getSysTime()-temptime)>(unsigned long)(1.5*tDit))
+		if( (systime::getSysTime()-temptime)>(unsigned long)(1.5*tDit)) 
 		{
 			isDitTimeout=true;
 			flag=0;
@@ -77,11 +78,32 @@ char pulse::capture()
 
 char pulse::receiveCode()
 {
+	char timeoutNo=0;
 	for(int i=0;i<6;)
 	{
-		
+		char isValid = capture();
+		if(isDitTimeout==false)
+		{
+			
+			morsePulses[i]=pulseData;
+			i++;
+		}else{
+			timeoutNo++;
+			if(timeoutNo!=1)	//for first timout repeat and for other return it
+			{
+				for(int j=5;j>i;j--)
+				{
+					morsePulses[5-i].ifData=0;				//make all other ifData zero
+				}
+				break;
+			}else{
+				 return 0;
+				 }
+				
+		}
 	
 	}
+	return 1;
 }
 void pulse::delay(unsigned int time_ms)
 {
@@ -91,4 +113,38 @@ void pulse::delay(unsigned int time_ms)
 void pulseInfo::setPulseWidthTime()
 {
 	pulseWidthTime=stopTime-startTime;
+}
+
+char* pulse::decodeToDitDah()
+{
+	
+	//find number of morse pulses
+	int i=0;
+	for( i=0;morsePulses[i].ifData!=0;i++);
+	int numberOfPulses=i;
+	for(int j=0;j<numberOfPulses;j++)
+	{
+		if(morsePulses[i].ifData==0)		//just to be safe
+		{
+			DitDah[i]=0;
+			continue;
+		}
+		if(errorCheck)
+		{
+			if(j>0)			//if not the first pulse
+			{
+			unsigned long timeWidth (morsePulses[i].startTime-morsePulses[i-1].stopTime) ;
+			if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return 0;
+			}
+		}
+		if(morsePulses[i].pulseWidthTime > ((tDit+tDah)/2 ) )	//its a dah
+		{
+			DitDah[i]=3;
+		}
+		else													//its a dit
+		{
+			DitDah[i]=1;
+		}
+	}
+	return DitDah;
 }
