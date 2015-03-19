@@ -10,6 +10,8 @@ pulse::pulse()
 	pulseData.ifData=0;		//set validity of data to invalid
 	timeout=2;
 	thresholdTime=20;
+	wordsPerMinute=10;
+	tDit=1200/wordsPerMinute;
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -40,9 +42,19 @@ char pulse::capture()
 {
 	init();
 	pulseData.numberOfEdges	= 0;		
+	//need to add time out checking
+	unsigned long temptime=systime::getSysTime();
+	while(TCNT1 == 0){
+		if(systime::getSysTime()-temptime)>(unsigned long)(1.5*tDit))
+		{
+			isDitTimeout=true;
+			flag=0;
+			return flag;
+		}
+	};		//wait for first falling edge	
 	
-	while(TCNT1 == 0);		//wait for first falling edge
 	pulseData.startTime=systime::getSysTime();	//save start time 
+	isDitTimeout=false;
 	while(true)									
 	{
 		pulseData.numberOfEdges=TCNT1;
@@ -67,11 +79,7 @@ char pulse::receiveCode()
 {
 	for(int i=0;i<6;)
 	{
-		if(capture())
-		{
-			morsePulses[i]=pulseData;
-			i++;						//increment only if valid data is received
-		}
+		
 	
 	}
 }

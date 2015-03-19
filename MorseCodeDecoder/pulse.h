@@ -28,10 +28,12 @@ class pulse
 {
 	pulseInfo pulseData;						//current information about current pulse
 	pulseInfo morsePulses[6];					//array for 
-	char flag;									//flag for validity of data stored
+	char flag;
+	bool isDitTimeout;									//flag for validity of data stored
 	unsigned int timeout;						//timeout in milli second for receiving pulses
 	unsigned int thresholdTime;		//setting threshold time for noise removal
 	unsigned int tDit,tDah;
+	unsigned int wordsPerMinute;
 	public:
 		pulse();
 		~pulse();
