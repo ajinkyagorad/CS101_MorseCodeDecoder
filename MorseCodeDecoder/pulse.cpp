@@ -10,10 +10,10 @@ pulse::pulse()
 	pulseData.ifData=0;		//set validity of data to invalid
 	timeout=2;
 	thresholdTime=20;
-	wordsPerMinute=10;
+	wordsPerMinute=25;
 	tDit=1200/wordsPerMinute;
 	tDah=3*tDit;
-	errorCheck=false;
+	errorCheck=true;
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -94,11 +94,11 @@ char pulse::receiveCode()
 			{
 				for(int j=5;j>i;j--)
 				{
-					morsePulses[5-i].ifData=0;				//make all other ifData zero
+					morsePulses[j].ifData=0;				//make all other ifData zero
 				}
 				break;
 			}else{
-				 return 0;
+				 continue;
 				 }
 				
 		}
@@ -123,28 +123,28 @@ bool pulse::decodeToDitDah()
 	int i=0;
 	for( i=0;morsePulses[i].ifData!=0;i++);
 	int numberOfPulses=i;
-	for(int j=0;j<numberOfPulses;j++)
+	for(int j=0;j<6;j++)
 	{
-		if(morsePulses[i].ifData==0)		//just to be safe
+		if(morsePulses[j].ifData==0)		//just to be safe
 		{
-			DitDah[i]=0;
+			DitDah[j]=0;
 			continue;
 		}
 		if(errorCheck)
 		{
 			if(j>0)			//if not the first pulse
 			{
-			unsigned long timeWidth (morsePulses[i].startTime-morsePulses[i-1].stopTime) ;
+			unsigned long timeWidth (morsePulses[j].startTime-morsePulses[j-1].stopTime) ;
 			if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
 			}
 		}
-		if(morsePulses[i].pulseWidthTime > ((tDit+tDah)/2 ) )	//its a dah
+		if(morsePulses[j].pulseWidthTime > ((tDit+tDah)/2 ) )	//its a dah
 		{
-			DitDah[i]=3;
+			DitDah[j]=3;
 		}
 		else													//its a dit
 		{
-			DitDah[i]=1;
+			DitDah[j]=1;
 		}
 	}
 	return true;

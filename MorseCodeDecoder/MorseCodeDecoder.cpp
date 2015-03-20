@@ -18,14 +18,23 @@ int main(void)
 	pulse code;
 	lcd.print(":)");
 	systime::sysTimeInit();
-	char data[7];
+	char data[7]="EEEEEE";	
+	char buffer [20];
+	DDRJ=0xAA;
     while(1)
     {
-         while(!code.receiveCode());		//wait while receiving the code
+         while(!code.receiveCode())		//wait while receiving the code
+		 {
+			 PORTJ=0XFF;
+			 PORTJ=0X00;
+		 }
 		 code.decodeToDitDah();
 		 code.getDecodedData(data);
+		 sprintf(buffer,"T:%lu",systime::getSysTime());
 		 data[6]=0;
 		 lcd.home();
 		 lcd.print(data);
+		 lcd.cursor(2,1);
+		 lcd.print(buffer);
     }
 }

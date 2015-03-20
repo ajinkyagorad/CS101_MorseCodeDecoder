@@ -13,6 +13,7 @@
 #include <avr/io.h>			//pin definations
 #include <avr/interrupt.h>	//using interrupt definations 
 #include <util/delay.h>		//
+#include <stdio.h>
 
 
 
