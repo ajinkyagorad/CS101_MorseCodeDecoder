@@ -83,24 +83,28 @@ char pulse::receiveCode()
 	for(int i=0;i<6;)
 	{
 		char isValid = capture();
-		if(isDitTimeout==false)
+		if(isValid==1)
+		{
+			if(isDitTimeout==false)
 		{
 			
 			morsePulses[i]=pulseData;
 			i++;
 		}else{
-			timeoutNo++;
-			if(timeoutNo!=1)	//for first timout repeat and for other return it
-			{
-				for(int j=5;j>i;j--)
+				timeoutNo++;
+				if(timeoutNo!=1)	//for first timout repeat and for other return it
 				{
-					morsePulses[j].ifData=0;				//make all other ifData zero
+					for(int j=5;j>i;j--)
+					{
+						morsePulses[j].ifData=0;				//make all other ifData zero
+					}
+					break;
+				}else{
+					 continue;
 				}
-				break;
-			}else{
-				 continue;
-				 }
 				
+		}
+		
 		}
 	
 	}
