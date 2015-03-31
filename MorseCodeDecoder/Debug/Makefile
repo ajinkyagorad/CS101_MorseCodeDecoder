@@ -40,7 +40,8 @@ C_SRCS +=  \
 ../pins.cpp \
 ../pulse.cpp \
 ../MorseCodeDecoder.cpp \
-../systime.cpp
+../systime.cpp \
+../uart0.cpp
 
 
 PREPROCESSING_SRCS += 
@@ -54,28 +55,32 @@ lcd.o \
 pins.o \
 pulse.o \
 MorseCodeDecoder.o \
-systime.o
+systime.o \
+uart0.o
 
 OBJS_AS_ARGS +=  \
 lcd.o \
 pins.o \
 pulse.o \
 MorseCodeDecoder.o \
-systime.o
+systime.o \
+uart0.o
 
 C_DEPS +=  \
 lcd.d \
 pins.d \
 pulse.d \
 MorseCodeDecoder.d \
-systime.d
+systime.d \
+uart0.d
 
 C_DEPS_AS_ARGS +=  \
 lcd.d \
 pins.d \
 pulse.d \
 MorseCodeDecoder.d \
-systime.d
+systime.d \
+uart0.d
 
 OUTPUT_FILE_PATH +=MorseCodeDecoder.elf
 
@@ -88,6 +93,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

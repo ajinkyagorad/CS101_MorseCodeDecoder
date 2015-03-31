@@ -150,6 +150,12 @@
     <Compile Include="systime.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="uart0.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="uart0.h">
+      <SubType>compile</SubType>
+    </Compile>
   </ItemGroup>
   <Import Project="$(AVRSTUDIO_EXE_PATH)\\Vs\\Compiler.targets" />
 </Project>

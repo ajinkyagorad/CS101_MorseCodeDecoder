@@ -12,29 +12,53 @@
 #include "pulse.h"
 #include "systime.h"
 #include "lcd.h"
+#include "uart0.h"
 int main(void)
 {
 	LCD lcd;
 	pulse code;
+	uart0 serial(57600);
 	lcd.print(":)");
+	serial.printStr("Initialised\r\n");
 	systime::sysTimeInit();
 	char data[7]="EEEEEE";	
 	char buffer [20];
 	DDRJ=0xAA;
     while(1)
     {
-         while(!code.receiveCode())		//wait while receiving the code
+		char  isValid;
+         if(code.receiveCode()>0)
 		 {
-			 PORTJ=0XFF;
-			 PORTJ=0X00;
+			 
+			 isValid=1;
 		 }
-		 code.decodeToDitDah();
+		 else 
+		 {
+			
+			 isValid=0;
+		 }
+		 
+		  isValid=code.decodeToDitDah();
 		 code.getDecodedData(data);
+		 if(isValid>0)
+		 {
+			 
+		 lcd.cursor(2,10);
+		 lcd.print("Ok");
 		 sprintf(buffer,"T:%lu",systime::getSysTime());
 		 data[6]=0;
+		 serial.printStr(data);
+		 serial.printStr("\t");
+		 serial.printStr(buffer);
+		 serial.write(0x0d);
+		 serial.write(0x0a);
 		 lcd.home();
 		 lcd.print(data);
 		 lcd.cursor(2,1);
 		 lcd.print(buffer);
+		 }else{
+			  lcd.cursor(2,10);
+			  lcd.print("Er");
+		 }
     }
 }

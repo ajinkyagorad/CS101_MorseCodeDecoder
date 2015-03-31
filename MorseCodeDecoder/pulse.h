@@ -1,5 +1,5 @@
 /*
- * IncFile1.h
+ * pulse.h
  *
  * Created: 12-03-2015 10:57:09 PM
  *  Author: Ajinkya
@@ -32,9 +32,11 @@ class pulse
 	char flag;
 	bool isDitTimeout;									//flag for validity of data stored
 	unsigned int timeout;						//timeout in milli second for receiving pulses
-	unsigned int thresholdTime;		//setting threshold time for noise removal
-	unsigned int tDit,tDah;
-	unsigned int wordsPerMinute;
+	unsigned int thresholdTime;		//setting minimum threshold time for noise removal
+	unsigned int maxThresholdTime;	//setting maximum threshold time for noise removal
+	unsigned int tDit,tDah;			//time for dits and dahs in ms
+	unsigned int wordsPerMinute;	
+	unsigned int tolerance;			//tolerance time for dit and dahs in ms
 	bool errorCheck;
 	public:
 		pulse();
@@ -47,6 +49,7 @@ class pulse
 	private:
 		char capture();						//capture pulse start & stop time in ms
 		void delay(unsigned int time_ms);						//delay in ms
+		unsigned int  absolute(int x);
 	
 	};
 
