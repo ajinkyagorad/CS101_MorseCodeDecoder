@@ -21,28 +21,25 @@ int main(void)
 	lcd.print(":)");
 	serial.printStr("Initialised\r\n");
 	systime::sysTimeInit();
-	char data[7]="EEEEEE";	
+	char data[7]="";	
 	char buffer [20];
-	DDRJ=0xAA;
     while(1)
     {
 		char  isValid;
          if(code.receiveCode()>0)
 		 {
-			 
-			 isValid=1;
+			  isValid=1;
 		 }
 		 else 
 		 {
-			
 			 isValid=0;
 		 }
 		 
 		  isValid=code.decodeToDitDah();
 		 code.getDecodedData(data);
+		 if(data[1]=='0')isValid=0;		//avoiding one units of transmit
 		 if(isValid>0)
 		 {
-			 
 		 lcd.cursor(2,10);
 		 lcd.print("Ok");
 		 sprintf(buffer,"T:%lu",systime::getSysTime());

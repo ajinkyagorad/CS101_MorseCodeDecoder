@@ -21,6 +21,7 @@ class pin{
 		 void  output();
 		 void  input();
 		 char  read();
+		 
 	};
 
 

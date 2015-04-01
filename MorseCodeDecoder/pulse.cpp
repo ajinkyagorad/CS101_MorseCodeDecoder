@@ -15,7 +15,7 @@ pulse::pulse()
 	thresholdTime=tDit/2;		//used for removal of pulses of length less than it (in ms)	must be +ve assume tdit >20
 	maxThresholdTime=(tDah*3)/2;	//used for removal of pulses of length more than it (in ms)	[threshold times doesn't account in errorCheck , removed in capture sequence]
 	errorCheck=true;			//for calculating error checks on received pulse data
-	tolerance=tDit;
+	tolerance=50;				
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -157,11 +157,13 @@ bool pulse::decodeToDitDah()
 					if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
 					}
 				}
-				if( absolute(morsePulses[j].pulseWidthTime - tDah )<tolerance )							//its a dah
+				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
+				if(morsePulses[j].pulseWidthTime>=2*tDit)
 				{
 					DitDah[j]=3;
 				}
-				else if(absolute(morsePulses[j].pulseWidthTime-tDit)<tolerance)							//its a dit
+			//	else if(absolute(morsePulses[j].pulseWidthTime-tDit)<tolerance)							//its a dit
+				else if (morsePulses[j].pulseWidthTime<2*tDit)
 				{
 					DitDah[j]=1;
 				}else{
