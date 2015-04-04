@@ -135,6 +135,12 @@
     <Compile Include="pins.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="Processor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="Processor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pulse.cpp">
       <SubType>compile</SubType>
     </Compile>

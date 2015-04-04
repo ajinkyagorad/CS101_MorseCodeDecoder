@@ -13,9 +13,11 @@
 class Processor
 {
 	public:
-		void process(char decoded);
+		int process(char decoded);
+		Processor();
 	protected:
 	private:
+	
 		void motionConfig();
 		void motorStop();
 		void forward();

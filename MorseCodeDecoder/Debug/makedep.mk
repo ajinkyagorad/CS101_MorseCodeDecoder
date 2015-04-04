@@ -6,6 +6,8 @@ lcd.cpp
 
 pins.cpp
 
+Processor.cpp
+
 pulse.cpp
 
 MorseCodeDecoder.cpp

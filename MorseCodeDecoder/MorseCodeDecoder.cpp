@@ -13,16 +13,19 @@
 #include "systime.h"
 #include "lcd.h"
 #include "uart0.h"
+#include "Processor.h"
 int main(void)
 {
 	LCD lcd;
 	pulse code;
 	uart0 serial(57600);
+	Processor motor;
 	lcd.print(":)");
 	serial.printStr("Initialised\r\n");
 	systime::sysTimeInit();
 	char data[7]="";	
 	char buffer [20];
+	motor.process('f');	//just to check
     while(1)
     {
 		char  isValid;
