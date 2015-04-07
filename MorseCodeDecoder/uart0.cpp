@@ -10,9 +10,9 @@ uart0 initialises UART0 given baud rate
 */
 uart0::uart0(unsigned long _baud)
 {
-	DDRE|=1<<PE1;		//make tx pin output
-	DDRE&= ~(1<<PE0);	//make rx pin input
-	UBRR0=F_CPU/16/_baud -1;
+	//DDRE|=1<<PE1;		//make tx pin output
+	//DDRE&= ~(1<<PE0);	//make rx pin input
+	UBRR0=(F_CPU/16/_baud) -1;
 	UCSR0B=(1<<RXEN0)|(1<<TXEN0);	//enable receiver and transmitter
 	UCSR0C=(1<<UCSZ00)|(1<<UCSZ01);	
 	baud=_baud;				//save a copy of it

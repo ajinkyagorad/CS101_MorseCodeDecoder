@@ -4,6 +4,8 @@
 
 lcd.cpp
 
+morsebuzzer.cpp
+
 pins.cpp
 
 Processor.cpp

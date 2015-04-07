@@ -129,6 +129,12 @@
     <Compile Include="lcd.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="morsebuzzer.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="morsebuzzer.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pins.cpp">
       <SubType>compile</SubType>
     </Compile>

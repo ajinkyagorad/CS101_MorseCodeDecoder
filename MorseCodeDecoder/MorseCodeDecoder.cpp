@@ -14,12 +14,15 @@
 #include "lcd.h"
 #include "uart0.h"
 #include "Processor.h"
+#include "morsebuzzer.h"
 int main(void)
 {
 	LCD lcd;
 	pulse code;
 	uart0 serial(57600);
 	Processor motor;
+	morsebuzzer buzz;
+	buzz.morseTransmit('f');
 	lcd.print(":)");
 	serial.printStr("Initialised\r\n");
 	systime::sysTimeInit();

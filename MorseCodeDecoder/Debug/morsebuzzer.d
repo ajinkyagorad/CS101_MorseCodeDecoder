@@ -1,4 +1,4 @@
-MorseCodeDecoder.d MorseCodeDecoder.o: .././MorseCodeDecoder.cpp \
+morsebuzzer.d morsebuzzer.o: .././morsebuzzer.cpp .././morsebuzzer.h \
  .././config.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\io.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\avr\sfr_defs.h \
@@ -19,9 +19,9 @@ MorseCodeDecoder.d MorseCodeDecoder.o: .././MorseCodeDecoder.cpp \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\stdio.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h \
- .././pins.h .././pulse.h .././systime.h .././lcd.h .././uart0.h \
- .././Processor.h .././morsebuzzer.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\ctype.h
+
+.././morsebuzzer.h:
 
 .././config.h:
 
@@ -62,19 +62,5 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-g
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stdarg.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\lib\gcc\avr\4.8.1\include\stddef.h:
-
-.././pins.h:
-
-.././pulse.h:
-
-.././systime.h:
-
-.././lcd.h:
-
-.././uart0.h:
-
-.././Processor.h:
-
-.././morsebuzzer.h:
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.1056\avr8-gnu-toolchain\avr\include\ctype.h:
