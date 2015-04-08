@@ -22,13 +22,14 @@ int main(void)
 	uart0 serial(57600);
 	Processor motor;
 	morsebuzzer buzz;
-	buzz.morseTransmit('f');
+	
+	buzz.morseTransmit("Hello");
 	lcd.print(":)");
 	serial.printStr("Initialised\r\n");
 	systime::sysTimeInit();
-	char data[7]="";	
+	char data[7]="";
 	char buffer [20];
-	motor.process('f');	//just to check
+	
     while(1)
     {
 		char  isValid;

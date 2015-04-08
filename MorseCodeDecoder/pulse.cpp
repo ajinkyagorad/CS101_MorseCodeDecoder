@@ -5,6 +5,12 @@
  *  Author: Ajinkya
  */ 
 #include "pulse.h"
+/************************************************************************
+*FUNCTION : pulse::pulse()
+*TYPE : CONSTRUCTOR
+*initialises related variables
+* default WPM, timeout, threshold time(min), max threshold time, errorchecking and tolerance to given value
+************************************************************************/
 pulse::pulse()
 {
 	pulseData.ifData=0;		//set validity of data to invalid
@@ -87,7 +93,7 @@ char pulse::capture()
 ****************************************/
 char pulse::receiveCode()	
 {
-	char timeoutNo=0;
+	//char timeoutNo=0;
 	bool isFirstTimeout=true;
 	for(int i=0; i<6; )
 	{
@@ -140,7 +146,7 @@ bool pulse::decodeToDitDah()
 	int i=0;
 	for(i=0; i<6; i++) DitDah[i] = 0;		//make  all previous data to zero
 	for( i=0;morsePulses[i].ifData!=0;i++);
-	int numberOfPulses=i;
+	//int numberOfPulses=i;
 	for(int j=0;j<6;j++)
 	{
 		if(morsePulses[j].ifData==0)		//just to be safe
@@ -159,14 +165,17 @@ bool pulse::decodeToDitDah()
 				}
 				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
 				if(morsePulses[j].pulseWidthTime>=2*tDit)
+			//	if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
 				{
 					DitDah[j]=3;
 				}
-			//	else if(absolute(morsePulses[j].pulseWidthTime-tDit)<tolerance)							//its a dit
+			//	else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
 				else if (morsePulses[j].pulseWidthTime<2*tDit)
 				{
 					DitDah[j]=1;
-				}else{
+				}
+				else
+				{
 					return false;
 				}
 			}
@@ -174,7 +183,7 @@ bool pulse::decodeToDitDah()
 	return true;
 }
 /************************************************************************/
-/* void pulse::getDecodedData(char *buffer)
+/* void pulse::getDecodedData(char *buffer)								*/
 /* input : pointer to a  buffer for storing decoded output              */
 /************************************************************************/
 void pulse::getDecodedData(char *buffer)

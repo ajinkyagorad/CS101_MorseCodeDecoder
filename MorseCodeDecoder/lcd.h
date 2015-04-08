@@ -34,6 +34,7 @@ class LCD{
 	void writeCommand(unsigned char);
 	void writeChar(char );
 	void print(char*);
+	void print(const char * );
 	void cursor(char,char);
 	void print(unsigned long val,char row,char col);
 	

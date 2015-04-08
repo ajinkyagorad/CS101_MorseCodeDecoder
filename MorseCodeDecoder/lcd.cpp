@@ -148,6 +148,10 @@ void LCD::print(char *str)
 		str++;
 	}
 }
+void LCD::print(const char * str)
+{
+	print((char*)str);
+}
 
 //Position the LCD cursor at "row", "column".
 

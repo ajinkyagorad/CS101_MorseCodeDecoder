@@ -23,7 +23,8 @@ class morsebuzzer {
 	public:
 		morsebuzzer(int t=40);		//set default time to 40 ms giving WPM of 1200/40=30
 		void morseTransmit(char data);
-		
+		void morseTransmit(const char * str);
+		void morseTransmit(char* str);
 		
 
 };
