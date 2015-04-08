@@ -15,12 +15,13 @@
 #include "uart0.h"
 #include "Processor.h"
 #include "morsebuzzer.h"
-
+#include "morseToText.h"
 int main(void)
 {
 	LCD lcd;
 	pulse code;
 	uart0 serial(57600);
+	decoder decodeIt;
 	Processor motor;
 	morsebuzzer buzz;
 	
@@ -59,6 +60,10 @@ int main(void)
 		 serial.write(0x0a);
 		 lcd.home();
 		 lcd.print(data);
+		 char letter=decodeIt.decodeToLetter(data);
+		 motor.process(letter);
+		 lcd.cursor(1,10);
+		 lcd.print(letter);
 		 lcd.cursor(2,1);
 		 lcd.print(buffer);
 		 }else{

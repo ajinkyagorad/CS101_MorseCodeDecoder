@@ -185,3 +185,7 @@ void LCD::print(unsigned long val,char row,char col)
 	for(i=i;i>=0;i--)writeChar(buffer[i]);
 	for( i=0;i<5;i++)writeChar(' ');
 }
+void LCD::print(char c)
+{
+	writeChar(c);
+}

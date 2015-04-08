@@ -22,11 +22,11 @@ class decoder{
 		  'H',     'V',     'F',     'U',     'L',     'A',     'P',     'J',     'B',     'X',     'C',     'Y',     'Z',     'Q',     ' ',    ' ',
 		'5','4', ' ','3', ' ',' ', ' ',' ', '2',' ', ' ','+', ' ',' ', ' ','1',	'6','=', '/',' ', ' ',' ', ' ',' ', '7',' ', ' ',' ', '8',' ', '9','0',
 										
-		};
+		};			//space ' ' represents no data not required character => invalid data
 		
 	public:
 		decoder();
-		void decodeToLetter(char * morseSequence);
+		char decodeToLetter(const char *  morseSequence);
 	};
 
 
