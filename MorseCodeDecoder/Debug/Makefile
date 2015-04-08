@@ -36,6 +36,7 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
+../CPPFile1.cpp \
 ../lcd.cpp \
 ../morsebuzzer.cpp \
 ../pins.cpp \
@@ -53,6 +54,7 @@ ASM_SRCS +=
 
 
 OBJS +=  \
+CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 pins.o \
@@ -63,6 +65,7 @@ systime.o \
 uart0.o
 
 OBJS_AS_ARGS +=  \
+CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 pins.o \
@@ -73,6 +76,7 @@ systime.o \
 uart0.o
 
 C_DEPS +=  \
+CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 pins.d \
@@ -83,6 +87,7 @@ systime.d \
 uart0.d
 
 C_DEPS_AS_ARGS +=  \
+CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 pins.d \
@@ -103,6 +108,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

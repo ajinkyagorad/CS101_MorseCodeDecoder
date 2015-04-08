@@ -15,13 +15,13 @@ pulse::pulse()
 {
 	pulseData.ifData=0;		//set validity of data to invalid
 	timeout=2;				//timeout in ms for getting pulse
-	wordsPerMinute=15;		//WPM of morse code
+	wordsPerMinute=30;		//WPM of morse code
 	tDit=1200/wordsPerMinute;	//calculates time of dits given WPM		
 	tDah=3*tDit;				//calculates time of dahs from tDit
 	thresholdTime=tDit/2;		//used for removal of pulses of length less than it (in ms)	must be +ve assume tdit >20
 	maxThresholdTime=(tDah*3)/2;	//used for removal of pulses of length more than it (in ms)	[threshold times doesn't account in errorCheck , removed in capture sequence]
 	errorCheck=true;			//for calculating error checks on received pulse data
-	tolerance=50;				
+	tolerance=20;				
 }
 //pulse::init initialses the registers for counting the clock pulses on 
 //T1 pin of mcu, 
@@ -164,13 +164,13 @@ bool pulse::decodeToDitDah()
 					}
 				}
 				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
-				if(morsePulses[j].pulseWidthTime>=2*tDit)
-			//	if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
+			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
+				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
 				{
 					DitDah[j]=3;
 				}
-			//	else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
-				else if (morsePulses[j].pulseWidthTime<2*tDit)
+				else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
+			//	else if (morsePulses[j].pulseWidthTime<2*tDit)
 				{
 					DitDah[j]=1;
 				}

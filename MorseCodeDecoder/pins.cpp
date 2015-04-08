@@ -41,6 +41,38 @@ pin::pin(int _pinNum)
 				ddr=&DDRD;
 				pinState=&PIND;
 			break;
+		case 4 :
+				port=&PORTE;
+				ddr=&DDRE;
+				pinState=&PINE;
+			break;
+		case 5 :
+				port=&PORTF;
+				ddr=&DDRF;
+				pinState=&PINF;
+			break;
+		case 6 :
+				port=&PORTG;
+				ddr=&DDRG;
+				pinState=&PING;
+			break;			
+		case 7 :
+				port=&PORTH;
+				ddr=&DDRH;
+				pinState=&PINH;
+			break;
+		case 8 :
+				port=&PORTJ;
+				ddr=&DDRJ;
+				pinState=&PINJ;
+			break;
+		case 9 :
+				port=&PORTK;
+				ddr=&DDRK;
+				pinState=&PINK;
+			break;
+		
+				
 		}
 	output();
 	
