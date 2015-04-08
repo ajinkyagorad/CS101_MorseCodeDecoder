@@ -100,7 +100,7 @@ char pulse::receiveCode()
 		char isValid = capture();		//receive data for pulse
 		if(isValid==1)				
 		{
-			if(isDitTimeout==false)		//c
+			if(isDitTimeout==false)		//
 			{
 				morsePulses[i]=pulseData;		//if not ditTimeout then save the data and increment index 'i'
 				morsePulses[i].ifData=1;

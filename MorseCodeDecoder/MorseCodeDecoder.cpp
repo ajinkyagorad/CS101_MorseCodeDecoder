@@ -44,10 +44,10 @@ int main(void)
 			 isValid=0;
 		 }
 		 
-		  isValid=code.decodeToDitDah();
+		 isValid=code.decodeToDitDah();
 		 code.getDecodedData(data);
 		 if(data[1]=='0')isValid=0;		//avoiding one units of transmit
-		 if(isValid>0)
+		 if(isValid>0)				//if all valid data
 		 {
 		 lcd.cursor(2,10);
 		 lcd.print("Ok");
@@ -59,13 +59,13 @@ int main(void)
 		 serial.write(0x0d);
 		 serial.write(0x0a);
 		 lcd.home();
-		 lcd.print(data);
-		 char letter=decodeIt.decodeToLetter(data);
-		 motor.process(letter);
+		 lcd.print(data);							//has data decoded to dit and dah 1's and 3's
+		 char letter=decodeIt.decodeToLetter(data);		//has data decoded to respective word
 		 lcd.cursor(1,10);
 		 lcd.print(letter);
 		 lcd.cursor(2,1);
 		 lcd.print(buffer);
+		 motor.process(letter);
 		 }else{
 			  lcd.cursor(2,10);
 			  lcd.print("Er");

@@ -9,7 +9,7 @@
 #ifndef PROCESSOR_H_
 #define PROCESSOR_H_
 #include "config.h"
-
+#include <ctype.h>
 class Processor
 {
 	public:

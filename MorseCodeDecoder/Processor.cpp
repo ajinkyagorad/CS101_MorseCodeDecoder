@@ -11,13 +11,13 @@
 
 int Processor::process(char decoded)
 {
-	
-	if(decoded=='f')
+	decoded=toupper(decoded);
+	if(decoded=='F')
 	{
 		moveMotorForward();
 		return 0;
 	}			
-	if(decoded=='b')
+	if(decoded=='B')
 	{
 		moveMotorBackward();
 		return 0;
