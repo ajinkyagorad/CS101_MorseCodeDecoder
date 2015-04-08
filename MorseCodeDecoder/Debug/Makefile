@@ -39,6 +39,7 @@ C_SRCS +=  \
 ../CPPFile1.cpp \
 ../lcd.cpp \
 ../morsebuzzer.cpp \
+../morseToText.cpp \
 ../pins.cpp \
 ../Processor.cpp \
 ../pulse.cpp \
@@ -57,6 +58,7 @@ OBJS +=  \
 CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
+morseToText.o \
 pins.o \
 Processor.o \
 pulse.o \
@@ -68,6 +70,7 @@ OBJS_AS_ARGS +=  \
 CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
+morseToText.o \
 pins.o \
 Processor.o \
 pulse.o \
@@ -79,6 +82,7 @@ C_DEPS +=  \
 CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
+morseToText.d \
 pins.d \
 Processor.d \
 pulse.d \
@@ -90,6 +94,7 @@ C_DEPS_AS_ARGS +=  \
 CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
+morseToText.d \
 pins.d \
 Processor.d \
 pulse.d \
@@ -108,6 +113,8 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
+
+
 
 
 

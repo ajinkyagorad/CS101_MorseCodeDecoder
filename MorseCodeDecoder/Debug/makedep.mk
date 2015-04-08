@@ -8,6 +8,8 @@ lcd.cpp
 
 morsebuzzer.cpp
 
+morseToText.cpp
+
 pins.cpp
 
 Processor.cpp

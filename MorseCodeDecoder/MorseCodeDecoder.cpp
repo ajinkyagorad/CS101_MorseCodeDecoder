@@ -15,6 +15,7 @@
 #include "uart0.h"
 #include "Processor.h"
 #include "morsebuzzer.h"
+
 int main(void)
 {
 	LCD lcd;

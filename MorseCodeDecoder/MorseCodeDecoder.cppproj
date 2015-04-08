@@ -138,6 +138,12 @@
     <Compile Include="morsebuzzer.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="morseToText.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="morseToText.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pins.cpp">
       <SubType>compile</SubType>
     </Compile>
