@@ -40,12 +40,12 @@ C_SRCS +=  \
 ../lcd.cpp \
 ../morsebuzzer.cpp \
 ../morseToText.cpp \
+../motor.cpp \
 ../pins.cpp \
 ../Processor.cpp \
 ../pulse.cpp \
 ../MorseCodeDecoder.cpp \
-../systime.cpp \
-../uart0.cpp
+../systime.cpp
 
 
 PREPROCESSING_SRCS += 
@@ -59,48 +59,48 @@ CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 morseToText.o \
+motor.o \
 pins.o \
 Processor.o \
 pulse.o \
 MorseCodeDecoder.o \
-systime.o \
-uart0.o
+systime.o
 
 OBJS_AS_ARGS +=  \
 CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 morseToText.o \
+motor.o \
 pins.o \
 Processor.o \
 pulse.o \
 MorseCodeDecoder.o \
-systime.o \
-uart0.o
+systime.o
 
 C_DEPS +=  \
 CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 morseToText.d \
+motor.d \
 pins.d \
 Processor.d \
 pulse.d \
 MorseCodeDecoder.d \
-systime.d \
-uart0.d
+systime.d
 
 C_DEPS_AS_ARGS +=  \
 CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 morseToText.d \
+motor.d \
 pins.d \
 Processor.d \
 pulse.d \
 MorseCodeDecoder.d \
-systime.d \
-uart0.d
+systime.d
 
 OUTPUT_FILE_PATH +=MorseCodeDecoder.elf
 

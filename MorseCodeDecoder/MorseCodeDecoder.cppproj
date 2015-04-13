@@ -144,6 +144,12 @@
     <Compile Include="morseToText.h">
       <SubType>compile</SubType>
     </Compile>
+    <Compile Include="motor.cpp">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="motor.h">
+      <SubType>compile</SubType>
+    </Compile>
     <Compile Include="pins.cpp">
       <SubType>compile</SubType>
     </Compile>
@@ -169,12 +175,6 @@
       <SubType>compile</SubType>
     </Compile>
     <Compile Include="systime.h">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="uart0.cpp">
-      <SubType>compile</SubType>
-    </Compile>
-    <Compile Include="uart0.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>

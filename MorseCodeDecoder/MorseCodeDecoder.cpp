@@ -12,7 +12,7 @@
 #include "pulse.h"
 #include "systime.h"
 #include "lcd.h"
-#include "uart0.h"
+
 #include "Processor.h"
 #include "morsebuzzer.h"
 #include "morseToText.h"
@@ -20,19 +20,19 @@ int main(void)
 {
 	LCD lcd;
 	pulse code;
-	uart0 serial(57600);
+	
 	decoder decodeIt;
 	Processor motor;
 	morsebuzzer buzz;
 	
 	buzz.morseTransmit("Hello");
 	lcd.print(":)");
-	serial.printStr("Initialised\r\n");
-	systime::sysTimeInit();
-	char data[7]="";
-	char buffer [20];
 	
-    while(1)
+	systime::sysTimeInit();
+	char data[7]="";		//morse data to be stored in this array
+	
+	
+    while(1)		//infinite loop
     {
 		char  isValid;
          if(code.receiveCode()>0)
@@ -45,30 +45,24 @@ int main(void)
 		 }
 		 
 		 isValid=code.decodeToDitDah();
-		 code.getDecodedData(data);
-		 if(data[1]=='0')isValid=0;		//avoiding one units of transmit
+		 code.getDecodedData(data);		
+		 if(data[1]=='0')isValid=0;		//avoiding one units of receive this will disable E(.) & T(-) of morse code 
 		 if(isValid>0)				//if all valid data
 		 {
 		 lcd.cursor(2,10);
 		 lcd.print("Ok");
-		 sprintf(buffer,"T:%lu",systime::getSysTime());
 		 data[6]=0;
-		 serial.printStr(data);
-		 serial.printStr("\t");
-		 serial.printStr(buffer);
-		 serial.write(0x0d);
-		 serial.write(0x0a);
-		 lcd.home();
-		 lcd.print(data);							//has data decoded to dit and dah 1's and 3's
 		 char letter=decodeIt.decodeToLetter(data);		//has data decoded to respective word
+		 
 		 lcd.cursor(1,10);
 		 lcd.print(letter);
-		 lcd.cursor(2,1);
-		 lcd.print(buffer);
-		 motor.process(letter);
+		 if(motor.process(letter))
+		 {
+			 buzz.sendRoger();
+			 lcd.print("ROGER   ",2,0);
+		 }
 		 }else{
-			  lcd.cursor(2,10);
-			  lcd.print("Er");
+			 lcd.print("ERROR Rx",2,0);
 		 }
     }
 }

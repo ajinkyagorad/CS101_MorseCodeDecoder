@@ -347,7 +347,7 @@ void morsebuzzer::morseTransmit( char* str)
 {
 	while(*str)
 	{
-		morseTransmit((char)(*str));
+		morseTransmit((*str));
 		str++;
 	}
 }
@@ -383,4 +383,9 @@ void morsebuzzer::delay(int time_ms)
 {
 	while(time_ms--)
 	_delay_ms(1);
+}
+void morsebuzzer::sendRoger()
+{
+	const char roger[]="ROGER";
+	morseTransmit(roger);
 }

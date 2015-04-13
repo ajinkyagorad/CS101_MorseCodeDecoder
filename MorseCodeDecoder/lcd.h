@@ -38,8 +38,8 @@ class LCD{
 	void print(char);
 	void cursor(char,char);
 	void print(unsigned long val,char row,char col);
-	
-	
+	void print(char*,char row,char col);
+	void print(const char*, char row,char col);
 	
 
 	};

@@ -9,62 +9,48 @@
 
 #include "Processor.h"
 
-int Processor::process(char decoded)
+char Processor::process(char decoded)
 {
+	
 	decoded=toupper(decoded);
-	if(decoded=='F')
+	switch(decoded)	
 	{
-		moveMotorForward();
-		return 0;
-	}			
-	if(decoded=='B')
-	{
-		moveMotorBackward();
-		return 0;
-	}			
-	else
-		return -1;		
+		case 'F' :
+			forward(500);
+			break;
+		case 'B' : 
+			back(500);
+			break;
+		case 'R' :
+			right(90);
+			break;
+		case 'L' :
+			left(90);
+			break;
+		
+		default :
+			if(decoded >='3' && decoded<='9')
+			{
+				int sides=decoded-'0';
+				int angle =360/sides;
+				
+				for(int i=0;i<sides;i++)
+				{
+					forward(400);
+					angleRotate(angle);
+				}
+			}
+			else
+			{
+					return 0;			//error
+			}
+	}
+	return 1;		//say it was successful
 }
 
-void Processor::motionConfig()
-{
-	DDRA |=0x0F;		//Output
-	PORTA &= 0x00;		//Initially stop
-	DDRL |= 0x18;		// Enable pin.
-	PORTL |= 0x18;
-}
 
-void Processor::motorStop()
-{
-	PORTA = 0x00;
-}
-
-void Processor::forward()
-{
-	PORTA = 0x06;
-}
-
-void Processor::backward()
-{
-	PORTA = 0x09;
-}
-
-void Processor::moveMotorForward()
-{
-	forward();
-	_delay_ms(2000);
-	motorStop();
-	//_delay_ms(2000);
-}
-
-void Processor::moveMotorBackward()
-{
-	backward();
-	_delay_ms(2000);
-	motorStop();
-	//_delay_ms(2000);
-}
 Processor::Processor()
 {
-	motionConfig();		//initialise the pins 
+	motor.init();
+	
 }

@@ -10,6 +10,8 @@ morsebuzzer.cpp
 
 morseToText.cpp
 
+motor.cpp
+
 pins.cpp
 
 Processor.cpp
@@ -19,6 +21,4 @@ pulse.cpp
 MorseCodeDecoder.cpp
 
 systime.cpp
-
-uart0.cpp
 

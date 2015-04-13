@@ -189,3 +189,15 @@ void LCD::print(char c)
 {
 	writeChar(c);
 }
+
+void LCD::print(const char* str,char row,char col)
+{
+	cursor(row,col);
+	print(str);
+}
+
+void LCD::print(char* str, char row, char col)
+{
+	cursor(row,col);
+	print(str);
+}

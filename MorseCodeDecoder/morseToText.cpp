@@ -30,7 +30,7 @@ decoder::decoder()
 *************************************************************************/
 char decoder::decodeToLetter( const char * morseSequence)
 {
-	int index=0,dataPos=0;
+	int index=0;//,dataPos=0;
 	for(int i=0;i<7;i++)
 	{
 		if(morseSequence[i]=='1')index=2*index+1;

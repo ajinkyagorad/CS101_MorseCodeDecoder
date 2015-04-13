@@ -25,6 +25,7 @@ class morsebuzzer {
 		void morseTransmit(char data);
 		void morseTransmit(const char * str);
 		void morseTransmit(char* str);
+		void sendRoger();
 		
 
 };

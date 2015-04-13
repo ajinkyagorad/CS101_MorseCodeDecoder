@@ -9,22 +9,20 @@
 #ifndef PROCESSOR_H_
 #define PROCESSOR_H_
 #include "config.h"
-#include <ctype.h>
-class Processor
+#include "motor.h"
+
+#include <ctype.h>		//for converting to uppercase
+class Processor:public movement
 {
+	movement motor;
 	public:
-		int process(char decoded);
+		char process(char decoded);
 		Processor();
-	protected:
-	private:
 	
-		void motionConfig();
-		void motorStop();
-		void forward();
-		void backward();
-		void moveMotorForward();
-		void moveMotorBackward();	
+	
 		
+		
+	
 };
 
 #endif /* PROCESSOR_H_ */
