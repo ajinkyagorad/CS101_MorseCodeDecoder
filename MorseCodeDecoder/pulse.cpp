@@ -38,6 +38,7 @@ void pulse::init(void)
 	TIFR1=0;
 	DDRD&=~(1<<PD6);							//make T1 pin as input PD6
 }
+
 /*********************************************************
 *FUNCTION : pulse::capture()
 *INPUT : NONE

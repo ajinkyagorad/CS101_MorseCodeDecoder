@@ -37,7 +37,7 @@ char Processor::process(char decoded)
 				for(int i=0;i<sides;i++)
 				{
 					forward(400);
-					angleRotate(angle);
+					right(angle);
 				}
 			}
 			else

@@ -2521,10 +2521,10 @@ char Processor::process(char decoded)
      bfe:	71 e0       	ldi	r23, 0x01	; 1
      c00:	ce 01       	movw	r24, r28
      c02:	6d df       	rcall	.-294    	; 0xade <_ZN8movement7forwardEj>
-					angleRotate(angle);
+					right(angle);
      c04:	b6 01       	movw	r22, r12
      c06:	ce 01       	movw	r24, r28
-     c08:	ec de       	rcall	.-552    	; 0x9e2 <_ZN8movement11angleRotateEj>
+     c08:	97 df       	rcall	.-210    	; 0xb38 <_ZN8movement5rightEj>
 			if(decoded >='3' && decoded<='9')
 			{
 				int sides=decoded-'0';
@@ -2537,7 +2537,7 @@ char Processor::process(char decoded)
      c10:	1f 05       	cpc	r17, r15
      c12:	a4 f3       	brlt	.-24     	; 0xbfc <_ZN9Processor7processEc+0x8c>
      c14:	04 c0       	rjmp	.+8      	; 0xc1e <_ZN9Processor7processEc+0xae>
-					angleRotate(angle);
+					right(angle);
 				}
 			}
 			else
