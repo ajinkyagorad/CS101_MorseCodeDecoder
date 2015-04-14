@@ -2,7 +2,7 @@
  * motor.cpp
  *
  * Created: 09-04-2015 04:27:17 PM
- *  
+ * Reference : eYantra
  */ 
 #include "motor.h"
 //---------------------------------------------------

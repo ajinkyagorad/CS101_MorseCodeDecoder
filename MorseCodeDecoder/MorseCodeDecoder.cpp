@@ -24,11 +24,11 @@ int main(void)
 	decoder decodeIt;
 	Processor motor;
 	morsebuzzer buzz;
-	
+	systime::sysTimeInit();
 	buzz.morseTransmit("Hello");
 	lcd.print(":)");
 	
-	systime::sysTimeInit();
+
 	char data[7]="";		//morse data to be stored in this array
 	
 	
@@ -44,14 +44,16 @@ int main(void)
 			 isValid=0;
 		 }
 		 
-		 isValid=code.decodeToDitDah();
+		 isValid*=code.decodeToDitDah();
 		 code.getDecodedData(data);		
 		 if(data[1]=='0')isValid=0;		//avoiding one units of receive this will disable E(.) & T(-) of morse code 
 		 if(isValid>0)				//if all valid data
 		 {
 		 lcd.cursor(2,10);
 		 lcd.print("Ok");
-		 data[6]=0;
+		 
+		 
+		 data[6]=0;		//to make data a null terminated string
 		 char letter=decodeIt.decodeToLetter(data);		//has data decoded to respective word
 		 
 		 lcd.cursor(1,10);
@@ -60,6 +62,7 @@ int main(void)
 		 {
 			 buzz.sendRoger();
 			 lcd.print("ROGER   ",2,0);
+			 _delay_ms(500);
 		 }
 		 }else{
 			 lcd.print("ERROR Rx",2,0);

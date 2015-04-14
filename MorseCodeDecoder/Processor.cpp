@@ -29,7 +29,7 @@ char Processor::process(char decoded)
 			break;
 		
 		default :
-			if(decoded >='3' && decoded<='9')
+			if(decoded >='1' && decoded<='9')
 			{
 				int sides=decoded-'0';
 				int angle =360/sides;

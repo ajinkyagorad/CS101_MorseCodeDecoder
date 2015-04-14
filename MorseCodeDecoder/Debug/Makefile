@@ -36,7 +36,6 @@ SUBDIRS :=
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS +=  \
-../CPPFile1.cpp \
 ../lcd.cpp \
 ../morsebuzzer.cpp \
 ../morseToText.cpp \
@@ -55,7 +54,6 @@ ASM_SRCS +=
 
 
 OBJS +=  \
-CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 morseToText.o \
@@ -67,7 +65,6 @@ MorseCodeDecoder.o \
 systime.o
 
 OBJS_AS_ARGS +=  \
-CPPFile1.o \
 lcd.o \
 morsebuzzer.o \
 morseToText.o \
@@ -79,7 +76,6 @@ MorseCodeDecoder.o \
 systime.o
 
 C_DEPS +=  \
-CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 morseToText.d \
@@ -91,7 +87,6 @@ MorseCodeDecoder.d \
 systime.d
 
 C_DEPS_AS_ARGS +=  \
-CPPFile1.d \
 lcd.d \
 morsebuzzer.d \
 morseToText.d \
@@ -113,8 +108,6 @@ OUTPUT_FILE_DEP:= ./makedep.mk
 LIB_DEP+= 
 
 # AVR32/GNU C Compiler
-
-
 
 
 

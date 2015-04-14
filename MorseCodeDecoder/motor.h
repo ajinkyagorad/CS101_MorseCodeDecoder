@@ -2,7 +2,7 @@
  * motor.h
  *
  * Created: 09-04-2015 04:27:02 PM
- * 
+ * Reference : eYantra
  */ 
 
 
@@ -12,7 +12,7 @@
 //using feedback system to move at specific angles
 
 class movement{
-		void motionPinConfig (void);
+		void motionPinConfig (void);					//
 		void leftEncoderPinConfig (void);
 		void rightEncoderPinConfig (void);
 		void portInit();
@@ -21,8 +21,8 @@ class movement{
 		void motionSet (unsigned char Direction);
 	public	:
 		movement();
-		void init();
-		void forward (void);
+		void init();									//configures all the necessary pins
+		void forward (void);							
 		void back (void);
 		void left (void);
 		void right (void);
