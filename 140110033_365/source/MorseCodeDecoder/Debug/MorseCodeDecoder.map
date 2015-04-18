@@ -963,7 +963,7 @@ END GROUP
  .debug_frame   0x0000089c       0x38 MorseCodeDecoder.o
  .debug_frame   0x000008d4       0x84 systime.o
 
-.debug_str      0x00000000      0xebc
+.debug_str      0x00000000      0xf1b
  *(.debug_str)
  .debug_str     0x00000000      0x313 lcd.o
                                 0x34c (size before relaxing)
@@ -971,17 +971,17 @@ END GROUP
                                 0x3c8 (size before relaxing)
  .debug_str     0x00000508       0x88 morseToText.o
                                 0x1a9 (size before relaxing)
- .debug_str     0x00000590      0x4df motor.o
-                                0x66c (size before relaxing)
- .debug_str     0x00000a6f       0xb7 pins.o
+ .debug_str     0x00000590      0x53e motor.o
+                                0x681 (size before relaxing)
+ .debug_str     0x00000ace       0xb7 pins.o
                                 0x236 (size before relaxing)
- .debug_str     0x00000b26       0x69 Processor.o
-                                0x5ca (size before relaxing)
- .debug_str     0x00000b8f      0x242 pulse.o
+ .debug_str     0x00000b85       0x69 Processor.o
+                                0x5df (size before relaxing)
+ .debug_str     0x00000bee      0x242 pulse.o
                                 0x446 (size before relaxing)
- .debug_str     0x00000dd1       0x59 MorseCodeDecoder.o
-                                0xb77 (size before relaxing)
- .debug_str     0x00000e2a       0x92 systime.o
+ .debug_str     0x00000e30       0x59 MorseCodeDecoder.o
+                                0xb8c (size before relaxing)
+ .debug_str     0x00000e89       0x92 systime.o
                                 0x269 (size before relaxing)
 
 .debug_loc      0x00000000     0x2d39

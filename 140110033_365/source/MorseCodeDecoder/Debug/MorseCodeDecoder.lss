@@ -21,11 +21,11 @@ Idx Name          Size      VMA       LMA       File off  Algn
                   CONTENTS, READONLY, DEBUGGING
   8 .debug_frame  00000958  00000000  00000000  00008f84  2**2
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_str    00000ebc  00000000  00000000  000098dc  2**0
+  9 .debug_str    00000f1b  00000000  00000000  000098dc  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_loc    00002d39  00000000  00000000  0000a798  2**0
+ 10 .debug_loc    00002d39  00000000  00000000  0000a7f7  2**0
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_ranges 00000368  00000000  00000000  0000d4d1  2**0
+ 11 .debug_ranges 00000368  00000000  00000000  0000d530  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -280,12 +280,6 @@ Disassembly of section .text:
      1d8:	13 cf       	rjmp	.-474    	; 0x0 <__vectors>
 
 000001da <_ZN3LCD10portConfigEv>:
-	cursor(row,col);
-	
-	i--;
-	for(i=i;i>=0;i--)writeChar(buffer[i]);
-	for( i=0;i<5;i++)writeChar(' ');
-}
      1da:	87 b1       	in	r24, 0x07	; 7
      1dc:	87 6f       	ori	r24, 0xF7	; 247
      1de:	87 b9       	out	0x07, r24	; 7
@@ -550,17 +544,10 @@ Disassembly of section .text:
      3c0:	08 95       	ret
 
 000003c2 <_ZN3LCD5printEc>:
-void LCD::print(char c)
-{
-	writeChar(c);
      3c2:	a0 cf       	rjmp	.-192    	; 0x304 <_ZN3LCD9writeCharEc>
      3c4:	08 95       	ret
 
 000003c6 <_ZN3LCD5printEPKccc>:
-}
-
-void LCD::print(const char* str,char row,char col)
-{
      3c6:	0f 93       	push	r16
      3c8:	1f 93       	push	r17
      3ca:	cf 93       	push	r28
@@ -568,24 +555,11 @@ void LCD::print(const char* str,char row,char col)
      3ce:	ec 01       	movw	r28, r24
      3d0:	8b 01       	movw	r16, r22
      3d2:	64 2f       	mov	r22, r20
-	cursor(row,col);
      3d4:	42 2f       	mov	r20, r18
      3d6:	d4 df       	rcall	.-88     	; 0x380 <_ZN3LCD6cursorEcc>
-		str++;
-	}
-}
-void LCD::print(const char * str)
-{
-	print((char*)str);
      3d8:	b8 01       	movw	r22, r16
      3da:	ce 01       	movw	r24, r28
      3dc:	bb df       	rcall	.-138    	; 0x354 <_ZN3LCD5printEPc>
-
-void LCD::print(const char* str,char row,char col)
-{
-	cursor(row,col);
-	print(str);
-}
      3de:	df 91       	pop	r29
      3e0:	cf 91       	pop	r28
      3e2:	1f 91       	pop	r17
@@ -593,54 +567,26 @@ void LCD::print(const char* str,char row,char col)
      3e6:	08 95       	ret
 
 000003e8 <_ZN11morsebuzzer15buzzerPinConfigEv>:
-	timeofdit=t;
-	buzzerPinConfig();
-}
-void morsebuzzer::buzzerPinConfig()
-{
-	DDRC|=0x08;
      3e8:	3b 9a       	sbi	0x07, 3	; 7
-	PORTC&=~0x08;		//set it initially low
      3ea:	43 98       	cbi	0x08, 3	; 8
      3ec:	08 95       	ret
 
 000003ee <_ZN11morsebuzzerC1Ei>:
-//between two consecutive letters : 3*dit time
-//between two consecutive words	: 7*dit time
-
-morsebuzzer::morsebuzzer (int t)
-{
-	timeofdit=t;
      3ee:	fc 01       	movw	r30, r24
      3f0:	71 83       	std	Z+1, r23	; 0x01
      3f2:	60 83       	st	Z, r22
-	buzzerPinConfig();
      3f4:	f9 cf       	rjmp	.-14     	; 0x3e8 <_ZN11morsebuzzer15buzzerPinConfigEv>
      3f6:	08 95       	ret
 
 000003f8 <_ZN11morsebuzzer8buzzerOnEv>:
-		buzzerOff();
-		delay(timeofdit);
-}
-void morsebuzzer::buzzerOn()
-{
-	PORTC|=0x08;		//set buzzer on 
      3f8:	43 9a       	sbi	0x08, 3	; 8
      3fa:	08 95       	ret
 
 000003fc <_ZN11morsebuzzer9buzzerOffEv>:
-}
-void morsebuzzer::buzzerOff()
-{
-	PORTC&=~0x08;	//set buzzer off
      3fc:	43 98       	cbi	0x08, 3	; 8
      3fe:	08 95       	ret
 
 00000400 <_ZN11morsebuzzer5delayEi>:
-}
-void morsebuzzer::delay(int time_ms)
-{
-	while(time_ms--)
      400:	61 15       	cp	r22, r1
      402:	71 05       	cpc	r23, r1
      404:	51 f0       	breq	.+20     	; 0x41a <_ZN11morsebuzzer5delayEi+0x1a>
@@ -663,45 +609,29 @@ void morsebuzzer::delay(int time_ms)
      41a:	08 95       	ret
 
 0000041c <_ZN11morsebuzzer11transmitDitEv>:
-void morsebuzzer::morseTransmit(const char * str)
-{
-	morseTransmit((char*)str);
-}
-void morsebuzzer::transmitDit()
-{
      41c:	cf 93       	push	r28
      41e:	df 93       	push	r29
      420:	ec 01       	movw	r28, r24
-	buzzerOn();
      422:	ea df       	rcall	.-44     	; 0x3f8 <_ZN11morsebuzzer8buzzerOnEv>
-	delay(timeofdit);
      424:	68 81       	ld	r22, Y
      426:	79 81       	ldd	r23, Y+1	; 0x01
      428:	ce 01       	movw	r24, r28
      42a:	ea df       	rcall	.-44     	; 0x400 <_ZN11morsebuzzer5delayEi>
-	buzzerOff();
      42c:	ce 01       	movw	r24, r28
      42e:	e6 df       	rcall	.-52     	; 0x3fc <_ZN11morsebuzzer9buzzerOffEv>
-	delay(timeofdit);
      430:	68 81       	ld	r22, Y
      432:	79 81       	ldd	r23, Y+1	; 0x01
      434:	ce 01       	movw	r24, r28
      436:	e4 df       	rcall	.-56     	; 0x400 <_ZN11morsebuzzer5delayEi>
-	
-}
      438:	df 91       	pop	r29
      43a:	cf 91       	pop	r28
      43c:	08 95       	ret
 
 0000043e <_ZN11morsebuzzer11transmitDahEv>:
-void morsebuzzer::transmitDah()
-{
      43e:	cf 93       	push	r28
      440:	df 93       	push	r29
      442:	ec 01       	movw	r28, r24
-		buzzerOn();
      444:	d9 df       	rcall	.-78     	; 0x3f8 <_ZN11morsebuzzer8buzzerOnEv>
-		delay(3*timeofdit);
      446:	88 81       	ld	r24, Y
      448:	99 81       	ldd	r25, Y+1	; 0x01
      44a:	bc 01       	movw	r22, r24
@@ -711,26 +641,17 @@ void morsebuzzer::transmitDah()
      452:	79 1f       	adc	r23, r25
      454:	ce 01       	movw	r24, r28
      456:	d4 df       	rcall	.-88     	; 0x400 <_ZN11morsebuzzer5delayEi>
-		buzzerOff();
      458:	ce 01       	movw	r24, r28
      45a:	d0 df       	rcall	.-96     	; 0x3fc <_ZN11morsebuzzer9buzzerOffEv>
-		delay(timeofdit);
      45c:	68 81       	ld	r22, Y
      45e:	79 81       	ldd	r23, Y+1	; 0x01
      460:	ce 01       	movw	r24, r28
      462:	ce df       	rcall	.-100    	; 0x400 <_ZN11morsebuzzer5delayEi>
-}
      464:	df 91       	pop	r29
      466:	cf 91       	pop	r28
      468:	08 95       	ret
 
 0000046a <_ZN11morsebuzzer13morseTransmitEc>:
-	PORTC&=~0x08;		//set it initially low
-}
-
-
-void morsebuzzer::morseTransmit(char data)
-{
      46a:	af 92       	push	r10
      46c:	bf 92       	push	r11
      46e:	cf 92       	push	r12
@@ -750,11 +671,6 @@ void morsebuzzer::morseTransmit(char data)
      48a:	0f be       	out	0x3f, r0	; 63
      48c:	cd bf       	out	0x3d, r28	; 61
      48e:	5c 01       	movw	r10, r24
-	char str1[7];
-    int j=0;
-	
-		
-		switch(toupper(data))
      490:	86 2f       	mov	r24, r22
      492:	90 e0       	ldi	r25, 0x00	; 0
      494:	0e 94 03 0b 	call	0x1606	; 0x1606 <toupper>
@@ -767,12 +683,8 @@ void morsebuzzer::morseTransmit(char data)
      4a4:	9f 4f       	sbci	r25, 0xFF	; 255
      4a6:	fc 01       	movw	r30, r24
      4a8:	0c 94 e9 0a 	jmp	0x15d2	; 0x15d2 <__tablejump2__>
-		{
-			  case ' ':					//if space ie , 7 dits buzzer=>low
-			  buzzerOff();
      4ac:	c5 01       	movw	r24, r10
      4ae:	a6 df       	rcall	.-180    	; 0x3fc <_ZN11morsebuzzer9buzzerOffEv>
-			  delay(timeofdit*7);
      4b0:	f5 01       	movw	r30, r10
      4b2:	80 81       	ld	r24, Z
      4b4:	91 81       	ldd	r25, Z+1	; 0x01
@@ -788,976 +700,375 @@ void morsebuzzer::morseTransmit(char data)
      4c8:	c5 01       	movw	r24, r10
      4ca:	9a df       	rcall	.-204    	; 0x400 <_ZN11morsebuzzer5delayEi>
      4cc:	87 c1       	rjmp	.+782    	; 0x7dc <_ZN11morsebuzzer13morseTransmitEc+0x372>
-			  return;					//return for end of transmission
-			  case 'A':
-			  str1[j++]='1';
      4ce:	81 e3       	ldi	r24, 0x31	; 49
      4d0:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j]='3';
      4d2:	83 e3       	ldi	r24, 0x33	; 51
      4d4:	8a 83       	std	Y+2, r24	; 0x02
-			  case ' ':					//if space ie , 7 dits buzzer=>low
-			  buzzerOff();
-			  delay(timeofdit*7);
-			  return;					//return for end of transmission
-			  case 'A':
-			  str1[j++]='1';
      4d6:	81 e0       	ldi	r24, 0x01	; 1
      4d8:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      4da:	72 c1       	rjmp	.+740    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'B':
-			  str1[j++]='3';
      4dc:	83 e3       	ldi	r24, 0x33	; 51
      4de:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      4e0:	81 e3       	ldi	r24, 0x31	; 49
      4e2:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      4e4:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
      4e6:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'B':
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
      4e8:	83 e0       	ldi	r24, 0x03	; 3
      4ea:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      4ec:	69 c1       	rjmp	.+722    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'C':
-			  str1[j++]='3';
      4ee:	93 e3       	ldi	r25, 0x33	; 51
      4f0:	99 83       	std	Y+1, r25	; 0x01
-			  str1[j++]='1';
      4f2:	81 e3       	ldi	r24, 0x31	; 49
      4f4:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      4f6:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j]='1';
      4f8:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'C':
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='3';
      4fa:	83 e0       	ldi	r24, 0x03	; 3
      4fc:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      4fe:	60 c1       	rjmp	.+704    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'D':
-			  str1[j++]='3';
      500:	83 e3       	ldi	r24, 0x33	; 51
      502:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      504:	81 e3       	ldi	r24, 0x31	; 49
      506:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='1';
      508:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
-			  break;
-			  
-			  case 'D':
-			  str1[j++]='3';
-			  str1[j++]='1';
      50a:	82 e0       	ldi	r24, 0x02	; 2
      50c:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      50e:	58 c1       	rjmp	.+688    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'E':
-			  str1[j]='1';
      510:	81 e3       	ldi	r24, 0x31	; 49
      512:	89 83       	std	Y+1, r24	; 0x01
-
-
-void morsebuzzer::morseTransmit(char data)
-{
-	char str1[7];
-    int j=0;
      514:	80 e0       	ldi	r24, 0x00	; 0
      516:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
-			  
-			  case 'E':
-			  str1[j]='1';
-			  break;
      518:	53 c1       	rjmp	.+678    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'F':
-			  str1[j++]='1';
      51a:	81 e3       	ldi	r24, 0x31	; 49
      51c:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      51e:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      520:	93 e3       	ldi	r25, 0x33	; 51
      522:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j]='1';
      524:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'F':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='3';
      526:	83 e0       	ldi	r24, 0x03	; 3
      528:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      52a:	4a c1       	rjmp	.+660    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'G':
-			  str1[j++]='3';
      52c:	83 e3       	ldi	r24, 0x33	; 51
      52e:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      530:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='1';
      532:	81 e3       	ldi	r24, 0x31	; 49
      534:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
-			  break;
-			  
-			  case 'G':
-			  str1[j++]='3';
-			  str1[j++]='3';
      536:	82 e0       	ldi	r24, 0x02	; 2
      538:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      53a:	42 c1       	rjmp	.+644    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'H':
-			  str1[j++]='1';
      53c:	81 e3       	ldi	r24, 0x31	; 49
      53e:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      540:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      542:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
      544:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'H':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
      546:	83 e0       	ldi	r24, 0x03	; 3
      548:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      54a:	3a c1       	rjmp	.+628    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'I':
-			  str1[j++]='1';
      54c:	81 e3       	ldi	r24, 0x31	; 49
      54e:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j]='1';
      550:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
-			  str1[j]='1';
-			  break;
-			  
-			  case 'I':
-			  str1[j++]='1';
      552:	81 e0       	ldi	r24, 0x01	; 1
      554:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      556:	34 c1       	rjmp	.+616    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'J':
-			  str1[j++]='1';
      558:	81 e3       	ldi	r24, 0x31	; 49
      55a:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      55c:	83 e3       	ldi	r24, 0x33	; 51
      55e:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      560:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
      562:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'J':
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='3';
      564:	83 e0       	ldi	r24, 0x03	; 3
      566:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      568:	2b c1       	rjmp	.+598    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'K':
-			  str1[j++]='3';
      56a:	83 e3       	ldi	r24, 0x33	; 51
      56c:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      56e:	91 e3       	ldi	r25, 0x31	; 49
      570:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j]='3';
      572:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
-			  break;
-			  
-			  case 'K':
-			  str1[j++]='3';
-			  str1[j++]='1';
      574:	82 e0       	ldi	r24, 0x02	; 2
      576:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      578:	23 c1       	rjmp	.+582    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'L':
-			  str1[j++]='1';
      57a:	81 e3       	ldi	r24, 0x31	; 49
      57c:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      57e:	93 e3       	ldi	r25, 0x33	; 51
      580:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j++]='1';
      582:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
      584:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'L':
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='1';
      586:	83 e0       	ldi	r24, 0x03	; 3
      588:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      58a:	1a c1       	rjmp	.+564    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'M':
-			  str1[j++]='3';
      58c:	83 e3       	ldi	r24, 0x33	; 51
      58e:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j]='3';
      590:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
-			  str1[j]='1';
-			  break;
-			  
-			  case 'M':
-			  str1[j++]='3';
      592:	81 e0       	ldi	r24, 0x01	; 1
      594:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      596:	14 c1       	rjmp	.+552    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'N':
-			  str1[j++]='3';
      598:	83 e3       	ldi	r24, 0x33	; 51
      59a:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j]='1';
      59c:	81 e3       	ldi	r24, 0x31	; 49
      59e:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
-			  str1[j]='3';
-			  break;
-			  
-			  case 'N':
-			  str1[j++]='3';
      5a0:	81 e0       	ldi	r24, 0x01	; 1
      5a2:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      5a4:	0d c1       	rjmp	.+538    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'O':
-			  str1[j++]='3';
      5a6:	83 e3       	ldi	r24, 0x33	; 51
      5a8:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      5aa:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='3';
      5ac:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
-			  break;
-			  
-			  case 'O':
-			  str1[j++]='3';
-			  str1[j++]='3';
      5ae:	82 e0       	ldi	r24, 0x02	; 2
      5b0:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      5b2:	06 c1       	rjmp	.+524    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'P':
-			  str1[j++]='1';
      5b4:	81 e3       	ldi	r24, 0x31	; 49
      5b6:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      5b8:	93 e3       	ldi	r25, 0x33	; 51
      5ba:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j++]='3';
      5bc:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j]='1';
      5be:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'P':
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='3';
      5c0:	83 e0       	ldi	r24, 0x03	; 3
      5c2:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      5c4:	fd c0       	rjmp	.+506    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'Q':
-			  str1[j++]='3';
      5c6:	83 e3       	ldi	r24, 0x33	; 51
      5c8:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      5ca:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      5cc:	91 e3       	ldi	r25, 0x31	; 49
      5ce:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j]='3';
      5d0:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'Q':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
      5d2:	83 e0       	ldi	r24, 0x03	; 3
      5d4:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      5d6:	f4 c0       	rjmp	.+488    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'R':
-			  str1[j++]='1';
      5d8:	81 e3       	ldi	r24, 0x31	; 49
      5da:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      5dc:	93 e3       	ldi	r25, 0x33	; 51
      5de:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j]='1';
      5e0:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
-			  break;
-			  
-			  case 'R':
-			  str1[j++]='1';
-			  str1[j++]='3';
      5e2:	82 e0       	ldi	r24, 0x02	; 2
      5e4:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      5e6:	ec c0       	rjmp	.+472    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'S':
-			  str1[j++]='1';
      5e8:	81 e3       	ldi	r24, 0x31	; 49
      5ea:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      5ec:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='1';
      5ee:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
-			  break;
-			  
-			  case 'S':
-			  str1[j++]='1';
-			  str1[j++]='1';
      5f0:	82 e0       	ldi	r24, 0x02	; 2
      5f2:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      5f4:	e5 c0       	rjmp	.+458    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'T':
-			  str1[j]='3';
      5f6:	83 e3       	ldi	r24, 0x33	; 51
      5f8:	89 83       	std	Y+1, r24	; 0x01
-
-
-void morsebuzzer::morseTransmit(char data)
-{
-	char str1[7];
-    int j=0;
      5fa:	80 e0       	ldi	r24, 0x00	; 0
      5fc:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
-			  
-			  case 'T':
-			  str1[j]='3';
-			  break;
      5fe:	e0 c0       	rjmp	.+448    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'U':
-			  str1[j++]='1';
      600:	81 e3       	ldi	r24, 0x31	; 49
      602:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      604:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='3';
      606:	83 e3       	ldi	r24, 0x33	; 51
      608:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
-			  break;
-			  
-			  case 'U':
-			  str1[j++]='1';
-			  str1[j++]='1';
      60a:	82 e0       	ldi	r24, 0x02	; 2
      60c:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      60e:	d8 c0       	rjmp	.+432    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'V':
-			  str1[j++]='1';
      610:	81 e3       	ldi	r24, 0x31	; 49
      612:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      614:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      616:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
      618:	83 e3       	ldi	r24, 0x33	; 51
      61a:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'V':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
      61c:	83 e0       	ldi	r24, 0x03	; 3
      61e:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      620:	cf c0       	rjmp	.+414    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'W':
-			  str1[j++]='1';
      622:	81 e3       	ldi	r24, 0x31	; 49
      624:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      626:	83 e3       	ldi	r24, 0x33	; 51
      628:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j]='3';
      62a:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
-			  break;
-			  
-			  case 'W':
-			  str1[j++]='1';
-			  str1[j++]='3';
      62c:	82 e0       	ldi	r24, 0x02	; 2
      62e:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      630:	c7 c0       	rjmp	.+398    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'X':
-			  str1[j++]='3';
      632:	83 e3       	ldi	r24, 0x33	; 51
      634:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      636:	91 e3       	ldi	r25, 0x31	; 49
      638:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j++]='1';
      63a:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j]='3';
      63c:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'X':
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
      63e:	83 e0       	ldi	r24, 0x03	; 3
      640:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      642:	be c0       	rjmp	.+380    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'y':
-			  str1[j++]='3';
      644:	83 e3       	ldi	r24, 0x33	; 51
      646:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      648:	91 e3       	ldi	r25, 0x31	; 49
      64a:	9a 83       	std	Y+2, r25	; 0x02
-			  str1[j++]='3';
      64c:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='3';
      64e:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'y':
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='3';
      650:	83 e0       	ldi	r24, 0x03	; 3
      652:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      654:	b5 c0       	rjmp	.+362    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case 'Z':
-			  str1[j++]='3';
      656:	83 e3       	ldi	r24, 0x33	; 51
      658:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      65a:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      65c:	81 e3       	ldi	r24, 0x31	; 49
      65e:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j]='1';
      660:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case 'Z':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
      662:	83 e0       	ldi	r24, 0x03	; 3
      664:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      666:	ac c0       	rjmp	.+344    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '0':
-			  str1[j++]='3';
      668:	83 e3       	ldi	r24, 0x33	; 51
      66a:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      66c:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      66e:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='3';
      670:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='3';
      672:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '0':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
      674:	84 e0       	ldi	r24, 0x04	; 4
      676:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      678:	a3 c0       	rjmp	.+326    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '1':
-			  str1[j++]='1';
      67a:	81 e3       	ldi	r24, 0x31	; 49
      67c:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      67e:	83 e3       	ldi	r24, 0x33	; 51
      680:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      682:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='3';
      684:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='3';
      686:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '1':
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
      688:	84 e0       	ldi	r24, 0x04	; 4
      68a:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      68c:	99 c0       	rjmp	.+306    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '2':
-			  str1[j++]='1';
      68e:	81 e3       	ldi	r24, 0x31	; 49
      690:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      692:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      694:	83 e3       	ldi	r24, 0x33	; 51
      696:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j+1]='3';
      698:	8d 83       	std	Y+5, r24	; 0x05
-			  str1[j]='3';
      69a:	8c 83       	std	Y+4, r24	; 0x04
-			  break;
-			  
-			  case '2':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='3';
      69c:	83 e0       	ldi	r24, 0x03	; 3
      69e:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j+1]='3';
-			  str1[j]='3';
-			  break;
      6a0:	8f c0       	rjmp	.+286    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '3':
-			  str1[j++]='1';
      6a2:	81 e3       	ldi	r24, 0x31	; 49
      6a4:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      6a6:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      6a8:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='3';
      6aa:	83 e3       	ldi	r24, 0x33	; 51
      6ac:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='3';
      6ae:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '3':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='3';
      6b0:	84 e0       	ldi	r24, 0x04	; 4
      6b2:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      6b4:	85 c0       	rjmp	.+266    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  
-			  case '4':
-			  str1[j++]='1';
      6b6:	81 e3       	ldi	r24, 0x31	; 49
      6b8:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      6ba:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      6bc:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      6be:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='3';
      6c0:	83 e3       	ldi	r24, 0x33	; 51
      6c2:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '4':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
      6c4:	84 e0       	ldi	r24, 0x04	; 4
      6c6:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      6c8:	7b c0       	rjmp	.+246    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '5':
-			  str1[j++]='1';
      6ca:	81 e3       	ldi	r24, 0x31	; 49
      6cc:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      6ce:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      6d0:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      6d2:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='1';
      6d4:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '5':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
      6d6:	84 e0       	ldi	r24, 0x04	; 4
      6d8:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      6da:	72 c0       	rjmp	.+228    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '6':
-			  str1[j++]='3';
      6dc:	83 e3       	ldi	r24, 0x33	; 51
      6de:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      6e0:	81 e3       	ldi	r24, 0x31	; 49
      6e2:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      6e4:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      6e6:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='1';
      6e8:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '6':
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='1';
      6ea:	84 e0       	ldi	r24, 0x04	; 4
      6ec:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      6ee:	68 c0       	rjmp	.+208    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '7':
-			  str1[j++]='3';
      6f0:	83 e3       	ldi	r24, 0x33	; 51
      6f2:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      6f4:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      6f6:	81 e3       	ldi	r24, 0x31	; 49
      6f8:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      6fa:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='1';
      6fc:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '7':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
      6fe:	84 e0       	ldi	r24, 0x04	; 4
      700:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      702:	5e c0       	rjmp	.+188    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '8':
-			  str1[j++]='3';
      704:	83 e3       	ldi	r24, 0x33	; 51
      706:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      708:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      70a:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      70c:	81 e3       	ldi	r24, 0x31	; 49
      70e:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='1';
      710:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '8':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
      712:	84 e0       	ldi	r24, 0x04	; 4
      714:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      716:	54 c0       	rjmp	.+168    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '9':
-			  str1[j++]='3';
      718:	83 e3       	ldi	r24, 0x33	; 51
      71a:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      71c:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      71e:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='3';
      720:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j]='1';
      722:	81 e3       	ldi	r24, 0x31	; 49
      724:	8d 83       	std	Y+5, r24	; 0x05
-			  
-			  case '9':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
      726:	84 e0       	ldi	r24, 0x04	; 4
      728:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      72a:	4a c0       	rjmp	.+148    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '.':
-			  str1[j++]='1';
      72c:	91 e3       	ldi	r25, 0x31	; 49
      72e:	99 83       	std	Y+1, r25	; 0x01
-			  str1[j++]='3';
      730:	83 e3       	ldi	r24, 0x33	; 51
      732:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      734:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j++]='3';
      736:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j++]='1';
      738:	9d 83       	std	Y+5, r25	; 0x05
-			  str1[j]='3';
      73a:	8e 83       	std	Y+6, r24	; 0x06
-			  case '.':
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='1';
      73c:	85 e0       	ldi	r24, 0x05	; 5
      73e:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      740:	3f c0       	rjmp	.+126    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case ',':
-			  str1[j++]='3';
      742:	83 e3       	ldi	r24, 0x33	; 51
      744:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      746:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='1';
      748:	91 e3       	ldi	r25, 0x31	; 49
      74a:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j++]='1';
      74c:	9c 83       	std	Y+4, r25	; 0x04
-			  str1[j++]='3';
      74e:	8d 83       	std	Y+5, r24	; 0x05
-			  str1[j]='3';
      750:	8e 83       	std	Y+6, r24	; 0x06
-			  case ',':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='3';
      752:	85 e0       	ldi	r24, 0x05	; 5
      754:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='3';
-			  break;
      756:	34 c0       	rjmp	.+104    	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case ':':
-			  str1[j++]='3';
      758:	83 e3       	ldi	r24, 0x33	; 51
      75a:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='3';
      75c:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      75e:	8b 83       	std	Y+3, r24	; 0x03
-			  str1[j++]='1';
      760:	81 e3       	ldi	r24, 0x31	; 49
      762:	8c 83       	std	Y+4, r24	; 0x04
-			  str1[j++]='1';
      764:	8d 83       	std	Y+5, r24	; 0x05
-			  str1[j]='1';
      766:	8e 83       	std	Y+6, r24	; 0x06
-			  case ':':
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
-			  str1[j++]='1';
      768:	85 e0       	ldi	r24, 0x05	; 5
      76a:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      76c:	29 c0       	rjmp	.+82     	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  
-			  case '?':
-			  str1[j++]='1';
      76e:	81 e3       	ldi	r24, 0x31	; 49
      770:	89 83       	std	Y+1, r24	; 0x01
-			  str1[j++]='1';
      772:	8a 83       	std	Y+2, r24	; 0x02
-			  str1[j++]='3';
      774:	93 e3       	ldi	r25, 0x33	; 51
      776:	9b 83       	std	Y+3, r25	; 0x03
-			  str1[j++]='3';
      778:	9c 83       	std	Y+4, r25	; 0x04
-			  str1[j++]='1';
      77a:	8d 83       	std	Y+5, r24	; 0x05
-			  str1[j]='1';
      77c:	8e 83       	std	Y+6, r24	; 0x06
-			  case '?':
-			  str1[j++]='1';
-			  str1[j++]='1';
-			  str1[j++]='3';
-			  str1[j++]='3';
-			  str1[j++]='1';
      77e:	85 e0       	ldi	r24, 0x05	; 5
      780:	90 e0       	ldi	r25, 0x00	; 0
-			  str1[j]='1';
-			  break;
      782:	1e c0       	rjmp	.+60     	; 0x7c0 <_ZN11morsebuzzer13morseTransmitEc+0x356>
-			  default:
-			  break;
-		}
-	    j++;
-	
-	str1[j]='\0';
      784:	1a 82       	std	Y+2, r1	; 0x02
-			  break;
-			  
-			  default:
-			  break;
-		}
-	    j++;
      786:	cc 24       	eor	r12, r12
      788:	c3 94       	inc	r12
      78a:	d1 2c       	mov	r13, r1
      78c:	21 c0       	rjmp	.+66     	; 0x7d0 <_ZN11morsebuzzer13morseTransmitEc+0x366>
-	
-	str1[j]='\0';
-	for(int i=0;i<j;i++)
-	{
-		if(str1[i]=='1')
      78e:	f7 01       	movw	r30, r14
      790:	81 91       	ld	r24, Z+
      792:	7f 01       	movw	r14, r30
      794:	81 33       	cpi	r24, 0x31	; 49
      796:	19 f4       	brne	.+6      	; 0x79e <_ZN11morsebuzzer13morseTransmitEc+0x334>
-		{
-		transmitDit();	
      798:	c5 01       	movw	r24, r10
      79a:	40 de       	rcall	.-896    	; 0x41c <_ZN11morsebuzzer11transmitDitEv>
      79c:	04 c0       	rjmp	.+8      	; 0x7a6 <_ZN11morsebuzzer13morseTransmitEc+0x33c>
-		}
-		else if(str1[i]=='3')
      79e:	83 33       	cpi	r24, 0x33	; 51
      7a0:	11 f4       	brne	.+4      	; 0x7a6 <_ZN11morsebuzzer13morseTransmitEc+0x33c>
-		{
-		transmitDah();
      7a2:	c5 01       	movw	r24, r10
      7a4:	4c de       	rcall	.-872    	; 0x43e <_ZN11morsebuzzer11transmitDahEv>
-			  break;
-		}
-	    j++;
-	
-	str1[j]='\0';
-	for(int i=0;i<j;i++)
      7a6:	0f 5f       	subi	r16, 0xFF	; 255
      7a8:	1f 4f       	sbci	r17, 0xFF	; 255
      7aa:	0c 15       	cp	r16, r12
      7ac:	1d 05       	cpc	r17, r13
      7ae:	7c f3       	brlt	.-34     	; 0x78e <_ZN11morsebuzzer13morseTransmitEc+0x324>
-		{
-		transmitDah();
-		}
-		else continue;
-	}
-	delay(2*timeofdit);			//end of transmission
      7b0:	f5 01       	movw	r30, r10
      7b2:	60 81       	ld	r22, Z
      7b4:	71 81       	ldd	r23, Z+1	; 0x01
@@ -1766,18 +1077,10 @@ void morsebuzzer::morseTransmit(char data)
      7ba:	c5 01       	movw	r24, r10
      7bc:	21 de       	rcall	.-958    	; 0x400 <_ZN11morsebuzzer5delayEi>
      7be:	0e c0       	rjmp	.+28     	; 0x7dc <_ZN11morsebuzzer13morseTransmitEc+0x372>
-			  break;
-			  
-			  default:
-			  break;
-		}
-	    j++;
      7c0:	6c 01       	movw	r12, r24
      7c2:	ff ef       	ldi	r31, 0xFF	; 255
      7c4:	cf 1a       	sub	r12, r31
      7c6:	df 0a       	sbc	r13, r31
-	
-	str1[j]='\0';
      7c8:	fe 01       	movw	r30, r28
      7ca:	ec 0d       	add	r30, r12
      7cc:	fd 1d       	adc	r31, r13
@@ -1785,21 +1088,9 @@ void morsebuzzer::morseTransmit(char data)
      7d0:	ce 01       	movw	r24, r28
      7d2:	01 96       	adiw	r24, 0x01	; 1
      7d4:	7c 01       	movw	r14, r24
-	PORTC&=~0x08;		//set it initially low
-}
-
-
-void morsebuzzer::morseTransmit(char data)
-{
      7d6:	00 e0       	ldi	r16, 0x00	; 0
      7d8:	10 e0       	ldi	r17, 0x00	; 0
      7da:	d9 cf       	rjmp	.-78     	; 0x78e <_ZN11morsebuzzer13morseTransmitEc+0x324>
-	transmitDah();
-	transmitDah();
-	delay(2*timeofdit);			//2*tDit because one dit time delay occured in transmit sequence =>>total 3*tDit between letters
-	
-	*/
-}
      7dc:	27 96       	adiw	r28, 0x07	; 7
      7de:	0f b6       	in	r0, 0x3f	; 63
      7e0:	f8 94       	cli
@@ -1819,37 +1110,21 @@ void morsebuzzer::morseTransmit(char data)
      7fc:	08 95       	ret
 
 000007fe <_ZN11morsebuzzer13morseTransmitEPc>:
-void morsebuzzer::morseTransmit( char* str)
-{
      7fe:	0f 93       	push	r16
      800:	1f 93       	push	r17
      802:	cf 93       	push	r28
      804:	df 93       	push	r29
      806:	8c 01       	movw	r16, r24
      808:	eb 01       	movw	r28, r22
-	while(*str)
      80a:	68 81       	ld	r22, Y
      80c:	66 23       	and	r22, r22
      80e:	31 f0       	breq	.+12     	; 0x81c <_ZN11morsebuzzer13morseTransmitEPc+0x1e>
      810:	21 96       	adiw	r28, 0x01	; 1
-	{
-		morseTransmit((*str));
      812:	c8 01       	movw	r24, r16
      814:	2a de       	rcall	.-940    	; 0x46a <_ZN11morsebuzzer13morseTransmitEc>
-	
-	*/
-}
-void morsebuzzer::morseTransmit( char* str)
-{
-	while(*str)
      816:	69 91       	ld	r22, Y+
      818:	61 11       	cpse	r22, r1
      81a:	fb cf       	rjmp	.-10     	; 0x812 <_ZN11morsebuzzer13morseTransmitEPc+0x14>
-	{
-		morseTransmit((*str));
-		str++;
-	}
-}
      81c:	df 91       	pop	r29
      81e:	cf 91       	pop	r28
      820:	1f 91       	pop	r17
@@ -1857,27 +1132,16 @@ void morsebuzzer::morseTransmit( char* str)
      824:	08 95       	ret
 
 00000826 <_ZN11morsebuzzer13morseTransmitEPKc>:
-
-void morsebuzzer::morseTransmit(const char * str)
-{
-	morseTransmit((char*)str);
      826:	eb cf       	rjmp	.-42     	; 0x7fe <_ZN11morsebuzzer13morseTransmitEPc>
      828:	08 95       	ret
 
 0000082a <_ZN11morsebuzzer9sendRogerEv>:
-{
-	while(time_ms--)
-	_delay_ms(1);
-}
-void morsebuzzer::sendRoger()
-{
      82a:	cf 93       	push	r28
      82c:	df 93       	push	r29
      82e:	00 d0       	rcall	.+0      	; 0x830 <_ZN11morsebuzzer9sendRogerEv+0x6>
      830:	00 d0       	rcall	.+0      	; 0x832 <_ZN11morsebuzzer9sendRogerEv+0x8>
      832:	cd b7       	in	r28, 0x3d	; 61
      834:	de b7       	in	r29, 0x3e	; 62
-	const char roger[]="ROGER";
      836:	26 e0       	ldi	r18, 0x06	; 6
      838:	ef e3       	ldi	r30, 0x3F	; 63
      83a:	f2 e0       	ldi	r31, 0x02	; 2
@@ -1887,22 +1151,10 @@ void morsebuzzer::sendRoger()
      842:	0d 92       	st	X+, r0
      844:	2a 95       	dec	r18
      846:	e1 f7       	brne	.-8      	; 0x840 <_ZN11morsebuzzer9sendRogerEv+0x16>
-	}
-}
-
-void morsebuzzer::morseTransmit(const char * str)
-{
-	morseTransmit((char*)str);
      848:	be 01       	movw	r22, r28
      84a:	6f 5f       	subi	r22, 0xFF	; 255
      84c:	7f 4f       	sbci	r23, 0xFF	; 255
      84e:	d7 df       	rcall	.-82     	; 0x7fe <_ZN11morsebuzzer13morseTransmitEPc>
-}
-void morsebuzzer::sendRoger()
-{
-	const char roger[]="ROGER";
-	morseTransmit(roger);
-}
      850:	26 96       	adiw	r28, 0x06	; 6
      852:	0f b6       	in	r0, 0x3f	; 63
      854:	f8 94       	cli
@@ -1914,12 +1166,6 @@ void morsebuzzer::sendRoger()
      860:	08 95       	ret
 
 00000862 <_ZN7decoderC1Ev>:
- *  
- */ 
-
-#include "morseToText.h"
-
-decoder::decoder()
      862:	dc 01       	movw	r26, r24
      864:	8f e3       	ldi	r24, 0x3F	; 63
      866:	90 e0       	ldi	r25, 0x00	; 0
@@ -1934,28 +1180,11 @@ decoder::decoder()
      878:	08 95       	ret
 
 0000087a <_ZN7decoder14decodeToLetterEPKc>:
-		   else return character equivalent of current positon 
-			after checking if it was not space and 
-			                                              
-*************************************************************************/
-char decoder::decodeToLetter( const char * morseSequence)
-{
      87a:	fb 01       	movw	r30, r22
-	int index=0;//,dataPos=0;
-	for(int i=0;i<7;i++)
      87c:	20 e0       	ldi	r18, 0x00	; 0
      87e:	30 e0       	ldi	r19, 0x00	; 0
-			after checking if it was not space and 
-			                                              
-*************************************************************************/
-char decoder::decodeToLetter( const char * morseSequence)
-{
-	int index=0;//,dataPos=0;
      880:	40 e0       	ldi	r20, 0x00	; 0
      882:	50 e0       	ldi	r21, 0x00	; 0
-	for(int i=0;i<7;i++)
-	{
-		if(morseSequence[i]=='1')index=2*index+1;
      884:	61 91       	ld	r22, Z+
      886:	61 33       	cpi	r22, 0x31	; 49
      888:	29 f4       	brne	.+10     	; 0x894 <_ZN7decoder14decodeToLetterEPKc+0x1a>
@@ -1964,8 +1193,6 @@ char decoder::decodeToLetter( const char * morseSequence)
      88e:	4f 5f       	subi	r20, 0xFF	; 255
      890:	5f 4f       	sbci	r21, 0xFF	; 255
      892:	0c c0       	rjmp	.+24     	; 0x8ac <_ZN7decoder14decodeToLetterEPKc+0x32>
-		else 
-		if(morseSequence[i]=='3')index=2*index+2;
      894:	63 33       	cpi	r22, 0x33	; 51
      896:	29 f4       	brne	.+10     	; 0x8a2 <_ZN7decoder14decodeToLetterEPKc+0x28>
      898:	4f 5f       	subi	r20, 0xFF	; 255
@@ -1973,34 +1200,17 @@ char decoder::decodeToLetter( const char * morseSequence)
      89c:	44 0f       	add	r20, r20
      89e:	55 1f       	adc	r21, r21
      8a0:	05 c0       	rjmp	.+10     	; 0x8ac <_ZN7decoder14decodeToLetterEPKc+0x32>
-		else											//end of morse sequence
-		{
-			return morseData[index];
      8a2:	fc 01       	movw	r30, r24
      8a4:	e4 0f       	add	r30, r20
      8a6:	f5 1f       	adc	r31, r21
      8a8:	82 81       	ldd	r24, Z+2	; 0x02
      8aa:	08 95       	ret
-			                                              
-*************************************************************************/
-char decoder::decodeToLetter( const char * morseSequence)
-{
-	int index=0;//,dataPos=0;
-	for(int i=0;i<7;i++)
      8ac:	2f 5f       	subi	r18, 0xFF	; 255
      8ae:	3f 4f       	sbci	r19, 0xFF	; 255
      8b0:	27 30       	cpi	r18, 0x07	; 7
      8b2:	31 05       	cpc	r19, r1
      8b4:	39 f7       	brne	.-50     	; 0x884 <_ZN7decoder14decodeToLetterEPKc+0xa>
-		else											//end of morse sequence
-		{
-			return morseData[index];
-		}
-	}
-	return ' ';				//if still in case not NICE morseSequence
      8b6:	80 e2       	ldi	r24, 0x20	; 32
-	
-}
      8b8:	08 95       	ret
 
 000008ba <__vector_6>:
@@ -2584,99 +1794,65 @@ Processor::Processor()
      c48:	08 95       	ret
 
 00000c4a <_ZN5pulseC1Ev>:
-*initialises related variables
-* default WPM, timeout, threshold time(min), max threshold time, errorchecking and tolerance to given value
-************************************************************************/
-pulse::pulse()
-{
-	pulseData.ifData=0;		//set validity of data to invalid
      c4a:	fc 01       	movw	r30, r24
      c4c:	14 86       	std	Z+12, r1	; 0x0c
-	timeout=2;				//timeout in ms for getting pulse
      c4e:	ed 59       	subi	r30, 0x9D	; 157
      c50:	ff 4f       	sbci	r31, 0xFF	; 255
      c52:	22 e0       	ldi	r18, 0x02	; 2
      c54:	30 e0       	ldi	r19, 0x00	; 0
      c56:	31 83       	std	Z+1, r19	; 0x01
      c58:	20 83       	st	Z, r18
-	wordsPerMinute=30;		//WPM of morse code
      c5a:	3a 96       	adiw	r30, 0x0a	; 10
      c5c:	2e e1       	ldi	r18, 0x1E	; 30
      c5e:	30 e0       	ldi	r19, 0x00	; 0
      c60:	31 83       	std	Z+1, r19	; 0x01
      c62:	20 83       	st	Z, r18
-	tDit=1200/wordsPerMinute;	//calculates time of dits given WPM		
      c64:	34 97       	sbiw	r30, 0x04	; 4
      c66:	28 e2       	ldi	r18, 0x28	; 40
      c68:	30 e0       	ldi	r19, 0x00	; 0
      c6a:	31 83       	std	Z+1, r19	; 0x01
      c6c:	20 83       	st	Z, r18
-	tDah=3*tDit;				//calculates time of dahs from tDit
      c6e:	32 96       	adiw	r30, 0x02	; 2
      c70:	28 e7       	ldi	r18, 0x78	; 120
      c72:	30 e0       	ldi	r19, 0x00	; 0
      c74:	31 83       	std	Z+1, r19	; 0x01
      c76:	20 83       	st	Z, r18
-	thresholdTime=tDit/2;		//used for removal of pulses of length less than it (in ms)	must be +ve assume tdit >20
      c78:	36 97       	sbiw	r30, 0x06	; 6
      c7a:	24 e1       	ldi	r18, 0x14	; 20
      c7c:	30 e0       	ldi	r19, 0x00	; 0
      c7e:	31 83       	std	Z+1, r19	; 0x01
      c80:	20 83       	st	Z, r18
-	maxThresholdTime=(tDah*3)/2;	//used for removal of pulses of length more than it (in ms)	[threshold times doesn't account in errorCheck , removed in capture sequence]
      c82:	32 96       	adiw	r30, 0x02	; 2
      c84:	44 eb       	ldi	r20, 0xB4	; 180
      c86:	50 e0       	ldi	r21, 0x00	; 0
      c88:	51 83       	std	Z+1, r21	; 0x01
      c8a:	40 83       	st	Z, r20
-	errorCheck=true;			//for calculating error checks on received pulse data
      c8c:	3a 96       	adiw	r30, 0x0a	; 10
      c8e:	41 e0       	ldi	r20, 0x01	; 1
      c90:	40 83       	st	Z, r20
-	tolerance=20;				
      c92:	32 97       	sbiw	r30, 0x02	; 2
      c94:	31 83       	std	Z+1, r19	; 0x01
      c96:	20 83       	st	Z, r18
      c98:	08 95       	ret
 
 00000c9a <_ZN5pulse4initEv>:
-//pulse::init initialses the registers for counting the clock pulses on 
-//T1 pin of mcu, 
-void pulse::init(void)
-{
-	
-	TCCR1A=0;		//not using any other mode
      c9a:	10 92 80 00 	sts	0x0080, r1
-	TCCR1B=(1<<CS12)|(1<<CS11); //set clock source as falling edge on T1 pin
      c9e:	86 e0       	ldi	r24, 0x06	; 6
      ca0:	80 93 81 00 	sts	0x0081, r24
-	TCNT1=0;					//set initial value of counter to zero
      ca4:	10 92 85 00 	sts	0x0085, r1
      ca8:	10 92 84 00 	sts	0x0084, r1
-	OCR1A=0;					//not using other timer modules
      cac:	10 92 89 00 	sts	0x0089, r1
      cb0:	10 92 88 00 	sts	0x0088, r1
-	OCR1B=0;
      cb4:	10 92 8b 00 	sts	0x008B, r1
      cb8:	10 92 8a 00 	sts	0x008A, r1
-	ICR1=0;
      cbc:	10 92 87 00 	sts	0x0087, r1
      cc0:	10 92 86 00 	sts	0x0086, r1
-	TIMSK1=0;					//not using interrupts for timer 1
      cc4:	10 92 6f 00 	sts	0x006F, r1
-	TIFR1=0;
      cc8:	16 ba       	out	0x16, r1	; 22
-	DDRD&=~(1<<PD6);							//make T1 pin as input PD6
      cca:	56 98       	cbi	0x0a, 6	; 10
      ccc:	08 95       	ret
 
 00000cce <_ZN5pulse5delayEj>:
-	}
-	return 1;
-}
-void pulse::delay(unsigned int time_ms)
-{
-	while(time_ms--)_delay_ms(1);
      cce:	61 15       	cp	r22, r1
      cd0:	71 05       	cpc	r23, r1
      cd2:	51 f0       	breq	.+20     	; 0xce8 <_ZN5pulse5delayEj+0x1a>
@@ -2693,12 +1869,7 @@ void pulse::delay(unsigned int time_ms)
      ce8:	08 95       	ret
 
 00000cea <_ZN9pulseInfo17setPulseWidthTimeEv>:
-}
-
-void pulseInfo::setPulseWidthTime()
-{
      cea:	fc 01       	movw	r30, r24
-	pulseWidthTime=stopTime-startTime;
      cec:	84 81       	ldd	r24, Z+4	; 0x04
      cee:	95 81       	ldd	r25, Z+5	; 0x05
      cf0:	20 81       	ld	r18, Z
@@ -2710,12 +1881,6 @@ void pulseInfo::setPulseWidthTime()
      cfc:	08 95       	ret
 
 00000cfe <_ZN5pulse7captureEv>:
-*check every 2 ms that counter is incremented or not
-*if incremented continue to check
-*else exit loop and save timer value as pulse count 
-*********************************************************/
-char pulse::capture()
-{
      cfe:	4f 92       	push	r4
      d00:	5f 92       	push	r5
      d02:	6f 92       	push	r6
@@ -2731,31 +1896,19 @@ char pulse::capture()
      d16:	cf 93       	push	r28
      d18:	df 93       	push	r29
      d1a:	ec 01       	movw	r28, r24
-	init();					//initialise registers for capture
      d1c:	be df       	rcall	.-132    	; 0xc9a <_ZN5pulse4initEv>
-	pulseData.numberOfEdges	= 0;		
      d1e:	19 86       	std	Y+9, r1	; 0x09
      d20:	18 86       	std	Y+8, r1	; 0x08
-	unsigned long temptime=systime::getSysTime();										//save time when it looks for a pulse 
      d22:	b6 d2       	rcall	.+1388   	; 0x1290 <_ZN7systime10getSysTimeEv>
      d24:	2b 01       	movw	r4, r22
      d26:	3c 01       	movw	r6, r24
-	while(TCNT1 == 0){
      d28:	04 e8       	ldi	r16, 0x84	; 132
      d2a:	10 e0       	ldi	r17, 0x00	; 0
-		if( (systime::getSysTime()-temptime)>(unsigned long)(1.5*tDit))					//check if sufficient time has passed after
      d2c:	5e 01       	movw	r10, r28
      d2e:	89 e6       	ldi	r24, 0x69	; 105
      d30:	a8 0e       	add	r10, r24
      d32:	b1 1c       	adc	r11, r1
-char pulse::capture()
-{
-	init();					//initialise registers for capture
-	pulseData.numberOfEdges	= 0;		
-	unsigned long temptime=systime::getSysTime();										//save time when it looks for a pulse 
-	while(TCNT1 == 0){
      d34:	21 c0       	rjmp	.+66     	; 0xd78 <_ZN5pulse7captureEv+0x7a>
-		if( (systime::getSysTime()-temptime)>(unsigned long)(1.5*tDit))					//check if sufficient time has passed after
      d36:	ac d2       	rcall	.+1368   	; 0x1290 <_ZN7systime10getSysTimeEv>
      d38:	6b 01       	movw	r12, r22
      d3a:	7c 01       	movw	r14, r24
@@ -2780,74 +1933,45 @@ char pulse::capture()
      d60:	8e 05       	cpc	r24, r14
      d62:	9f 05       	cpc	r25, r15
      d64:	48 f4       	brcc	.+18     	; 0xd78 <_ZN5pulse7captureEv+0x7a>
-		{
-			isDitTimeout=true;															//if yes setDitTimeout Bit
      d66:	fe 01       	movw	r30, r28
      d68:	ee 59       	subi	r30, 0x9E	; 158
      d6a:	ff 4f       	sbci	r31, 0xFF	; 255
      d6c:	81 e0       	ldi	r24, 0x01	; 1
      d6e:	80 83       	st	Z, r24
-			flag=1;
      d70:	cf 59       	subi	r28, 0x9F	; 159
      d72:	df 4f       	sbci	r29, 0xFF	; 255
      d74:	88 83       	st	Y, r24
-			return flag;
      d76:	4a c0       	rjmp	.+148    	; 0xe0c <_ZN5pulse7captureEv+0x10e>
-char pulse::capture()
-{
-	init();					//initialise registers for capture
-	pulseData.numberOfEdges	= 0;		
-	unsigned long temptime=systime::getSysTime();										//save time when it looks for a pulse 
-	while(TCNT1 == 0){
      d78:	f8 01       	movw	r30, r16
      d7a:	80 81       	ld	r24, Z
      d7c:	91 81       	ldd	r25, Z+1	; 0x01
      d7e:	89 2b       	or	r24, r25
      d80:	d1 f2       	breq	.-76     	; 0xd36 <_ZN5pulse7captureEv+0x38>
-			flag=1;
-			return flag;
-		}
-	};		//wait for first falling edge		//ie within timeout edge is detected
-	
-	pulseData.startTime=systime::getSysTime();	//save START TIME
      d82:	86 d2       	rcall	.+1292   	; 0x1290 <_ZN7systime10getSysTimeEv>
      d84:	68 83       	st	Y, r22
      d86:	79 83       	std	Y+1, r23	; 0x01
      d88:	8a 83       	std	Y+2, r24	; 0x02
      d8a:	9b 83       	std	Y+3, r25	; 0x03
-	isDitTimeout=false;
      d8c:	fe 01       	movw	r30, r28
      d8e:	ee 59       	subi	r30, 0x9E	; 158
      d90:	ff 4f       	sbci	r31, 0xFF	; 255
      d92:	10 82       	st	Z, r1
-	while(true)									
-	{
-		pulseData.numberOfEdges=TCNT1;
      d94:	04 e8       	ldi	r16, 0x84	; 132
      d96:	10 e0       	ldi	r17, 0x00	; 0
-		delay(timeout);								///timeout value pulse edge timeoutSS
      d98:	7e 01       	movw	r14, r28
      d9a:	f3 e6       	ldi	r31, 0x63	; 99
      d9c:	ef 0e       	add	r14, r31
      d9e:	f1 1c       	adc	r15, r1
-	
-	pulseData.startTime=systime::getSysTime();	//save START TIME
-	isDitTimeout=false;
-	while(true)									
-	{
-		pulseData.numberOfEdges=TCNT1;
      da0:	f8 01       	movw	r30, r16
      da2:	80 81       	ld	r24, Z
      da4:	91 81       	ldd	r25, Z+1	; 0x01
      da6:	99 87       	std	Y+9, r25	; 0x09
      da8:	88 87       	std	Y+8, r24	; 0x08
-		delay(timeout);								///timeout value pulse edge timeoutSS
      daa:	f7 01       	movw	r30, r14
      dac:	60 81       	ld	r22, Z
      dae:	71 81       	ldd	r23, Z+1	; 0x01
      db0:	ce 01       	movw	r24, r28
      db2:	8d df       	rcall	.-230    	; 0xcce <_ZN5pulse5delayEj>
-		if(pulseData.numberOfEdges == TCNT1)break;	//break only if counter value
      db4:	f8 01       	movw	r30, r16
      db6:	80 81       	ld	r24, Z
      db8:	91 81       	ldd	r25, Z+1	; 0x01
@@ -2856,19 +1980,13 @@ char pulse::capture()
      dbe:	28 17       	cp	r18, r24
      dc0:	39 07       	cpc	r19, r25
      dc2:	71 f7       	brne	.-36     	; 0xda0 <_ZN5pulse7captureEv+0xa2>
-													//does not changes within timeout
-	}
-	pulseData.stopTime=systime::getSysTime();		//save pulse STOP TIME
      dc4:	65 d2       	rcall	.+1226   	; 0x1290 <_ZN7systime10getSysTimeEv>
      dc6:	6c 83       	std	Y+4, r22	; 0x04
      dc8:	7d 83       	std	Y+5, r23	; 0x05
      dca:	8e 83       	std	Y+6, r24	; 0x06
      dcc:	9f 83       	std	Y+7, r25	; 0x07
-	pulseData.setPulseWidthTime();					
      dce:	ce 01       	movw	r24, r28
      dd0:	8c df       	rcall	.-232    	; 0xcea <_ZN9pulseInfo17setPulseWidthTimeEv>
-	
-	if((pulseData.pulseWidthTime<thresholdTime)	&&	(pulseData.pulseWidthTime>maxThresholdTime)	)//flag for error
      dd2:	8a 85       	ldd	r24, Y+10	; 0x0a
      dd4:	9b 85       	ldd	r25, Y+11	; 0x0b
      dd6:	fe 01       	movw	r30, r28
@@ -2885,27 +2003,19 @@ char pulse::capture()
      dec:	28 17       	cp	r18, r24
      dee:	39 07       	cpc	r19, r25
      df0:	18 f4       	brcc	.+6      	; 0xdf8 <_ZN5pulse7captureEv+0xfa>
-	{
-		flag=0;			//invalid flag : unsuccessful
      df2:	36 97       	sbiw	r30, 0x06	; 6
      df4:	10 82       	st	Z, r1
      df6:	05 c0       	rjmp	.+10     	; 0xe02 <_ZN5pulse7captureEv+0x104>
-	}else{
-		flag=1;			//valid flag   : successful
      df8:	81 e0       	ldi	r24, 0x01	; 1
      dfa:	fe 01       	movw	r30, r28
      dfc:	ef 59       	subi	r30, 0x9F	; 159
      dfe:	ff 4f       	sbci	r31, 0xFF	; 255
      e00:	80 83       	st	Z, r24
-	}
-	pulseData.ifData=flag;			//says validity of pulse data
      e02:	fe 01       	movw	r30, r28
      e04:	ef 59       	subi	r30, 0x9F	; 159
      e06:	ff 4f       	sbci	r31, 0xFF	; 255
      e08:	80 81       	ld	r24, Z
      e0a:	8c 87       	std	Y+12, r24	; 0x0c
-	return flag;
-}
      e0c:	df 91       	pop	r29
      e0e:	cf 91       	pop	r28
      e10:	1f 91       	pop	r17
@@ -2923,12 +2033,6 @@ char pulse::capture()
      e28:	08 95       	ret
 
 00000e2a <_ZN5pulse11receiveCodeEv>:
-/***************************************
-*char pulse::receiveCode()
-*returns 1 if successful 
-****************************************/
-char pulse::receiveCode()	
-{
      e2a:	cf 92       	push	r12
      e2c:	df 92       	push	r13
      e2e:	ef 92       	push	r14
@@ -2938,62 +2042,30 @@ char pulse::receiveCode()
      e36:	cf 93       	push	r28
      e38:	df 93       	push	r29
      e3a:	ec 01       	movw	r28, r24
-	//char timeoutNo=0;
-	bool isFirstTimeout=true;
-	for(int i=0; i<6; )
      e3c:	00 e0       	ldi	r16, 0x00	; 0
      e3e:	10 e0       	ldi	r17, 0x00	; 0
-	{
-		char isValid = capture();		//receive data for pulse
-		if(isValid==1)				
-		{
-			if(isDitTimeout==false)		//
      e40:	7c 01       	movw	r14, r24
      e42:	82 e6       	ldi	r24, 0x62	; 98
      e44:	e8 0e       	add	r14, r24
      e46:	f1 1c       	adc	r15, r1
-			{
-				morsePulses[i]=pulseData;		//if not ditTimeout then save the data and increment index 'i'
      e48:	0f 2e       	mov	r0, r31
      e4a:	fd e0       	ldi	r31, 0x0D	; 13
      e4c:	df 2e       	mov	r13, r31
      e4e:	f0 2d       	mov	r31, r0
-				morsePulses[i].ifData=1;
      e50:	cc 24       	eor	r12, r12
      e52:	c3 94       	inc	r12
-{
-	//char timeoutNo=0;
-	bool isFirstTimeout=true;
-	for(int i=0; i<6; )
-	{
-		char isValid = capture();		//receive data for pulse
      e54:	ce 01       	movw	r24, r28
      e56:	53 df       	rcall	.-346    	; 0xcfe <_ZN5pulse7captureEv>
-		if(isValid==1)				
      e58:	81 30       	cpi	r24, 0x01	; 1
      e5a:	c1 f5       	brne	.+112    	; 0xecc <_ZN5pulse11receiveCodeEv+0xa2>
-		{
-			if(isDitTimeout==false)		//
      e5c:	f7 01       	movw	r30, r14
      e5e:	80 81       	ld	r24, Z
      e60:	88 23       	and	r24, r24
      e62:	21 f0       	breq	.+8      	; 0xe6c <_ZN5pulse11receiveCodeEv+0x42>
-			}else{								//else it was a ditTimeout
-				
-				if(isFirstTimeout==true)	//for first timout repeat and for other return it
-				{
-					isFirstTimeout = false;	//next time this  will not execute
-					for(int j=5;j>i;j--)
      e64:	05 30       	cpi	r16, 0x05	; 5
      e66:	11 05       	cpc	r17, r1
      e68:	ec f0       	brlt	.+58     	; 0xea4 <_ZN5pulse11receiveCodeEv+0x7a>
      e6a:	34 c0       	rjmp	.+104    	; 0xed4 <_ZN5pulse11receiveCodeEv+0xaa>
-		char isValid = capture();		//receive data for pulse
-		if(isValid==1)				
-		{
-			if(isDitTimeout==false)		//
-			{
-				morsePulses[i]=pulseData;		//if not ditTimeout then save the data and increment index 'i'
      e6c:	c8 01       	movw	r24, r16
      e6e:	01 96       	adiw	r24, 0x01	; 1
      e70:	d8 9e       	mul	r13, r24
@@ -3009,7 +2081,6 @@ char pulse::receiveCode()
      e84:	0d 92       	st	X+, r0
      e86:	2a 95       	dec	r18
      e88:	e1 f7       	brne	.-8      	; 0xe82 <_ZN5pulse11receiveCodeEv+0x58>
-				morsePulses[i].ifData=1;
      e8a:	d0 9e       	mul	r13, r16
      e8c:	f0 01       	movw	r30, r0
      e8e:	d1 9e       	mul	r13, r17
@@ -3018,14 +2089,7 @@ char pulse::receiveCode()
      e94:	ec 0f       	add	r30, r28
      e96:	fd 1f       	adc	r31, r29
      e98:	c1 8e       	std	Z+25, r12	; 0x19
-				i++;
      e9a:	8c 01       	movw	r16, r24
-****************************************/
-char pulse::receiveCode()	
-{
-	//char timeoutNo=0;
-	bool isFirstTimeout=true;
-	for(int i=0; i<6; )
      e9c:	86 30       	cpi	r24, 0x06	; 6
      e9e:	91 05       	cpc	r25, r1
      ea0:	cc f4       	brge	.+50     	; 0xed4 <_ZN5pulse11receiveCodeEv+0xaa>
@@ -3044,40 +2108,16 @@ char pulse::receiveCode()
      eba:	fc 01       	movw	r30, r24
      ebc:	e6 5a       	subi	r30, 0xA6	; 166
      ebe:	ff 4f       	sbci	r31, 0xFF	; 255
-				if(isFirstTimeout==true)	//for first timout repeat and for other return it
-				{
-					isFirstTimeout = false;	//next time this  will not execute
-					for(int j=5;j>i;j--)
-					{
-						morsePulses[j].ifData=0;				//make all other ifData zero
      ec0:	10 82       	st	Z, r1
      ec2:	0d 97       	sbiw	r24, 0x0d	; 13
-			}else{								//else it was a ditTimeout
-				
-				if(isFirstTimeout==true)	//for first timout repeat and for other return it
-				{
-					isFirstTimeout = false;	//next time this  will not execute
-					for(int j=5;j>i;j--)
      ec4:	82 17       	cp	r24, r18
      ec6:	93 07       	cpc	r25, r19
      ec8:	c1 f7       	brne	.-16     	; 0xeba <_ZN5pulse11receiveCodeEv+0x90>
      eca:	04 c0       	rjmp	.+8      	; 0xed4 <_ZN5pulse11receiveCodeEv+0xaa>
-****************************************/
-char pulse::receiveCode()	
-{
-	//char timeoutNo=0;
-	bool isFirstTimeout=true;
-	for(int i=0; i<6; )
      ecc:	06 30       	cpi	r16, 0x06	; 6
      ece:	11 05       	cpc	r17, r1
      ed0:	0c f4       	brge	.+2      	; 0xed4 <_ZN5pulse11receiveCodeEv+0xaa>
      ed2:	c0 cf       	rjmp	.-128    	; 0xe54 <_ZN5pulse11receiveCodeEv+0x2a>
-						}
-				}
-		}else ;					//do nothing if it was not a valid data
-	}
-	return 1;
-}
      ed4:	81 e0       	ldi	r24, 0x01	; 1
      ed6:	df 91       	pop	r29
      ed8:	cf 91       	pop	r28
@@ -3090,12 +2130,6 @@ char pulse::receiveCode()
      ee6:	08 95       	ret
 
 00000ee8 <_ZN5pulse14decodeToDitDahEv>:
-*extracts dit and dah from the morsePulses array and stores in  DitDah array
-*returns true if successful (only if error checking) else false
-*absense of errorChecking strictly calculates on based on (tDit+tDah)/2
-**********************************************/
-bool pulse::decodeToDitDah()
-{
      ee8:	2f 92       	push	r2
      eea:	3f 92       	push	r3
      eec:	4f 92       	push	r4
@@ -3114,10 +2148,6 @@ bool pulse::decodeToDitDah()
      f06:	1f 93       	push	r17
      f08:	cf 93       	push	r28
      f0a:	df 93       	push	r29
-	
-	//find number of morse pulses
-	int i=0;
-	for(i=0; i<6; i++) DitDah[i] = 0;		//make  all previous data to zero
      f0c:	fc 01       	movw	r30, r24
      f0e:	e5 5a       	subi	r30, 0xA5	; 165
      f10:	ff 4f       	sbci	r31, 0xFF	; 255
@@ -3132,7 +2162,6 @@ bool pulse::decodeToDitDah()
      f22:	10 82       	st	Z, r1
      f24:	31 96       	adiw	r30, 0x01	; 1
      f26:	10 82       	st	Z, r1
-	for( i=0;morsePulses[i].ifData!=0;i++);
      f28:	ec 01       	movw	r28, r24
      f2a:	29 8d       	ldd	r18, Y+25	; 0x19
      f2c:	21 11       	cpse	r18, r1
@@ -3141,54 +2170,23 @@ bool pulse::decodeToDitDah()
      f32:	dc 01       	movw	r26, r24
      f34:	a5 5a       	subi	r26, 0xA5	; 165
      f36:	bf 4f       	sbci	r27, 0xFF	; 255
-*extracts dit and dah from the morsePulses array and stores in  DitDah array
-*returns true if successful (only if error checking) else false
-*absense of errorChecking strictly calculates on based on (tDit+tDah)/2
-**********************************************/
-bool pulse::decodeToDitDah()
-{
      f38:	20 e0       	ldi	r18, 0x00	; 0
      f3a:	30 e0       	ldi	r19, 0x00	; 0
-		{
-			DitDah[j]=0;
-			continue;
-		}
-		else{
-				if(errorCheck)
      f3c:	bc 01       	movw	r22, r24
      f3e:	6f 58       	subi	r22, 0x8F	; 143
      f40:	7f 4f       	sbci	r23, 0xFF	; 255
-					if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
-					}
-				}
-				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
-			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
-				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
      f42:	8c 01       	movw	r16, r24
      f44:	01 59       	subi	r16, 0x91	; 145
      f46:	1f 4f       	sbci	r17, 0xFF	; 255
      f48:	ac 01       	movw	r20, r24
      f4a:	45 59       	subi	r20, 0x95	; 149
      f4c:	5f 4f       	sbci	r21, 0xFF	; 255
-				{
-					DitDah[j]=3;
-				}
-				else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
      f4e:	5c 01       	movw	r10, r24
      f50:	d9 e6       	ldi	r29, 0x69	; 105
      f52:	ad 0e       	add	r10, r29
      f54:	b1 1c       	adc	r11, r1
-			//	else if (morsePulses[j].pulseWidthTime<2*tDit)
-				{
-					DitDah[j]=1;
      f56:	88 24       	eor	r8, r8
      f58:	83 94       	inc	r8
-				}
-				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
-			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
-				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
-				{
-					DitDah[j]=3;
      f5a:	0f 2e       	mov	r0, r31
      f5c:	f3 e0       	ldi	r31, 0x03	; 3
      f5e:	9f 2e       	mov	r9, r31
@@ -3201,43 +2199,23 @@ bool pulse::decodeToDitDah()
      f6c:	3f 4f       	sbci	r19, 0xFF	; 255
      f6e:	f9 01       	movw	r30, r18
      f70:	3d 97       	sbiw	r30, 0x0d	; 13
-{
-	
-	//find number of morse pulses
-	int i=0;
-	for(i=0; i<6; i++) DitDah[i] = 0;		//make  all previous data to zero
-	for( i=0;morsePulses[i].ifData!=0;i++);
      f72:	40 81       	ld	r20, Z
      f74:	41 11       	cpse	r20, r1
      f76:	f9 cf       	rjmp	.-14     	; 0xf6a <_ZN5pulse14decodeToDitDahEv+0x82>
      f78:	db cf       	rjmp	.-74     	; 0xf30 <_ZN5pulse14decodeToDitDahEv+0x48>
      f7a:	1f 01       	movw	r2, r30
-	//int numberOfPulses=i;
-	for(int j=0;j<6;j++)
-	{
-		if(morsePulses[j].ifData==0)		//just to be safe
      f7c:	81 8d       	ldd	r24, Z+25	; 0x19
      f7e:	81 11       	cpse	r24, r1
      f80:	02 c0       	rjmp	.+4      	; 0xf86 <_ZN5pulse14decodeToDitDahEv+0x9e>
-		{
-			DitDah[j]=0;
      f82:	1c 92       	st	X, r1
-			continue;
      f84:	55 c0       	rjmp	.+170    	; 0x1030 <_ZN5pulse14decodeToDitDahEv+0x148>
-		}
-		else{
-				if(errorCheck)
      f86:	eb 01       	movw	r28, r22
      f88:	88 81       	ld	r24, Y
      f8a:	88 23       	and	r24, r24
      f8c:	49 f1       	breq	.+82     	; 0xfe0 <_ZN5pulse14decodeToDitDahEv+0xf8>
-				{
-					if(j>0)			//if not the first pulse
      f8e:	12 16       	cp	r1, r18
      f90:	13 06       	cpc	r1, r19
      f92:	34 f5       	brge	.+76     	; 0xfe0 <_ZN5pulse14decodeToDitDahEv+0xf8>
-					{
-					unsigned long timeWidth (morsePulses[j].startTime-morsePulses[j-1].stopTime) ;		//finding time distance betn next pulse falling and previous pulse rising
      f94:	c5 84       	ldd	r12, Z+13	; 0x0d
      f96:	d6 84       	ldd	r13, Z+14	; 0x0e
      f98:	e7 84       	ldd	r14, Z+15	; 0x0f
@@ -3250,7 +2228,6 @@ bool pulse::decodeToDitDah()
      fa6:	d5 08       	sbc	r13, r5
      fa8:	e6 08       	sbc	r14, r6
      faa:	f7 08       	sbc	r15, r7
-					if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
      fac:	e5 01       	movw	r28, r10
      fae:	88 81       	ld	r24, Y
      fb0:	99 81       	ldd	r25, Y+1	; 0x01
@@ -3277,11 +2254,6 @@ bool pulse::decodeToDitDah()
      fda:	e6 04       	cpc	r14, r6
      fdc:	f7 04       	cpc	r15, r7
      fde:	98 f5       	brcc	.+102    	; 0x1046 <_ZN5pulse14decodeToDitDahEv+0x15e>
-					}
-				}
-				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
-			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
-				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
      fe0:	e1 01       	movw	r28, r2
      fe2:	ef 88       	ldd	r14, Y+23	; 0x17
      fe4:	f8 8c       	ldd	r15, Y+24	; 0x18
@@ -3294,12 +2266,6 @@ bool pulse::decodeToDitDah()
      ff2:	67 01       	movw	r12, r14
      ff4:	c8 1a       	sub	r12, r24
      ff6:	d9 0a       	sbc	r13, r25
-*unsigned int pulse::absolute(int x)
-*return absolute value of an integer
-*********************************/
-unsigned int pulse::absolute(int x)
-{
-	return (  (x>=0)?x:(-1)*x   );
      ff8:	c6 01       	movw	r24, r12
      ffa:	99 23       	and	r25, r25
      ffc:	24 f4       	brge	.+8      	; 0x1006 <_ZN5pulse14decodeToDitDahEv+0x11e>
@@ -3307,32 +2273,16 @@ unsigned int pulse::absolute(int x)
     1000:	99 27       	eor	r25, r25
     1002:	8c 19       	sub	r24, r12
     1004:	9d 09       	sbc	r25, r13
-					if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
-					}
-				}
-				//if( absolute(morsePulses[j].pulseWidthTime - tDah ) < tolerance )							//its a dah
-			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
-				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
     1006:	86 15       	cp	r24, r6
     1008:	97 05       	cpc	r25, r7
     100a:	10 f4       	brcc	.+4      	; 0x1010 <_ZN5pulse14decodeToDitDahEv+0x128>
-				{
-					DitDah[j]=3;
     100c:	9c 92       	st	X, r9
     100e:	10 c0       	rjmp	.+32     	; 0x1030 <_ZN5pulse14decodeToDitDahEv+0x148>
-				}
-				else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
     1010:	e5 01       	movw	r28, r10
     1012:	88 81       	ld	r24, Y
     1014:	99 81       	ldd	r25, Y+1	; 0x01
     1016:	e8 1a       	sub	r14, r24
     1018:	f9 0a       	sbc	r15, r25
-*unsigned int pulse::absolute(int x)
-*return absolute value of an integer
-*********************************/
-unsigned int pulse::absolute(int x)
-{
-	return (  (x>=0)?x:(-1)*x   );
     101a:	c7 01       	movw	r24, r14
     101c:	99 23       	and	r25, r25
     101e:	24 f4       	brge	.+8      	; 0x1028 <_ZN5pulse14decodeToDitDahEv+0x140>
@@ -3340,25 +2290,10 @@ unsigned int pulse::absolute(int x)
     1022:	99 27       	eor	r25, r25
     1024:	8e 19       	sub	r24, r14
     1026:	9f 09       	sbc	r25, r15
-			//	if(morsePulses[j].pulseWidthTime>=2*tDit)
-				if( absolute((int)(morsePulses[j].pulseWidthTime - tDah) ) < tolerance )		
-				{
-					DitDah[j]=3;
-				}
-				else if(absolute((int)(morsePulses[j].pulseWidthTime-tDit))<tolerance)							//its a dit
     1028:	86 15       	cp	r24, r6
     102a:	97 05       	cpc	r25, r7
     102c:	70 f4       	brcc	.+28     	; 0x104a <_ZN5pulse14decodeToDitDahEv+0x162>
-			//	else if (morsePulses[j].pulseWidthTime<2*tDit)
-				{
-					DitDah[j]=1;
     102e:	8c 92       	st	X, r8
-	//find number of morse pulses
-	int i=0;
-	for(i=0; i<6; i++) DitDah[i] = 0;		//make  all previous data to zero
-	for( i=0;morsePulses[i].ifData!=0;i++);
-	//int numberOfPulses=i;
-	for(int j=0;j<6;j++)
     1030:	2f 5f       	subi	r18, 0xFF	; 255
     1032:	3f 4f       	sbci	r19, 0xFF	; 255
     1034:	3d 96       	adiw	r30, 0x0d	; 13
@@ -3368,30 +2303,13 @@ unsigned int pulse::absolute(int x)
     103c:	09 f0       	breq	.+2      	; 0x1040 <_ZN5pulse14decodeToDitDahEv+0x158>
     103e:	9d cf       	rjmp	.-198    	; 0xf7a <_ZN5pulse14decodeToDitDahEv+0x92>
     1040:	06 c0       	rjmp	.+12     	; 0x104e <_ZN5pulse14decodeToDitDahEv+0x166>
-				if(errorCheck)
-				{
-					if(j>0)			//if not the first pulse
-					{
-					unsigned long timeWidth (morsePulses[j].startTime-morsePulses[j-1].stopTime) ;		//finding time distance betn next pulse falling and previous pulse rising
-					if(!((timeWidth>tDit/2) && ( timeWidth <tDah/2) ))return false;
     1042:	80 e0       	ldi	r24, 0x00	; 0
     1044:	05 c0       	rjmp	.+10     	; 0x1050 <_ZN5pulse14decodeToDitDahEv+0x168>
     1046:	80 e0       	ldi	r24, 0x00	; 0
     1048:	03 c0       	rjmp	.+6      	; 0x1050 <_ZN5pulse14decodeToDitDahEv+0x168>
-				{
-					DitDah[j]=1;
-				}
-				else
-				{
-					return false;
     104a:	80 e0       	ldi	r24, 0x00	; 0
     104c:	01 c0       	rjmp	.+2      	; 0x1050 <_ZN5pulse14decodeToDitDahEv+0x168>
-				}
-			}
-	}
-	return true;
     104e:	81 e0       	ldi	r24, 0x01	; 1
-}
     1050:	df 91       	pop	r29
     1052:	cf 91       	pop	r28
     1054:	1f 91       	pop	r17
@@ -3413,18 +2331,11 @@ unsigned int pulse::absolute(int x)
     1074:	08 95       	ret
 
 00001076 <_ZN5pulse14getDecodedDataEPc>:
-/************************************************************************/
-/* void pulse::getDecodedData(char *buffer)								*/
-/* input : pointer to a  buffer for storing decoded output              */
-/************************************************************************/
-void pulse::getDecodedData(char *buffer)
-{
     1076:	dc 01       	movw	r26, r24
     1078:	a5 5a       	subi	r26, 0xA5	; 165
     107a:	bf 4f       	sbci	r27, 0xFF	; 255
     107c:	e6 2f       	mov	r30, r22
     107e:	f7 2f       	mov	r31, r23
-	for(int i=0;i<6;i++)buffer[i]=DitDah[i]+0x30;
     1080:	20 e0       	ldi	r18, 0x00	; 0
     1082:	30 e0       	ldi	r19, 0x00	; 0
     1084:	8d 91       	ld	r24, X+
@@ -3435,7 +2346,6 @@ void pulse::getDecodedData(char *buffer)
     108e:	26 30       	cpi	r18, 0x06	; 6
     1090:	31 05       	cpc	r19, r1
     1092:	c1 f7       	brne	.-16     	; 0x1084 <_ZN5pulse14getDecodedDataEPc+0xe>
-}
     1094:	08 95       	ret
 
 00001096 <main>:
@@ -3675,12 +2585,6 @@ int main(void)
     11e6:	95 cf       	rjmp	.-214    	; 0x1112 <main+0x7c>
 
 000011e8 <__vector_35>:
-//OUTPUT	: number of timer3 overflows
-
-unsigned long getOverflows()		
-{
-	return overflows;	
-}
     11e8:	1f 92       	push	r1
     11ea:	0f 92       	push	r0
     11ec:	0f b6       	in	r0, 0x3f	; 63
@@ -3712,47 +2616,25 @@ unsigned long getOverflows()
     1230:	18 95       	reti
 
 00001232 <_ZN7systime11sysTimeInitEv>:
-//OUTPUT	: NONE
-//	Initialises the Timer3 with prescaler of 1024 sync to system clock
-void sysTimeInit()
-{
-	
-	cli();							//disable interrupts
     1232:	f8 94       	cli
-	TCCR3A=0;
     1234:	10 92 90 00 	sts	0x0090, r1
-	TCCR3B=(1<<CS32)|(1<<CS30);		//use prescaler of 1024
     1238:	85 e0       	ldi	r24, 0x05	; 5
     123a:	80 93 91 00 	sts	0x0091, r24
-									//counting clock is now F_OSC/1024
-									//corresponding to 69.44 uS on 14.7456 MHz
-	TCCR3C=0;
     123e:	10 92 92 00 	sts	0x0092, r1
-	TIMSK3=1<<TOIE3;				// Enable timer overflow interrupt
     1242:	81 e0       	ldi	r24, 0x01	; 1
     1244:	80 93 71 00 	sts	0x0071, r24
-	overflows=0;
     1248:	10 92 6c 02 	sts	0x026C, r1
     124c:	10 92 6d 02 	sts	0x026D, r1
     1250:	10 92 6e 02 	sts	0x026E, r1
     1254:	10 92 6f 02 	sts	0x026F, r1
-	TCNT3=0;						//clear timer3 counter value
     1258:	10 92 95 00 	sts	0x0095, r1
     125c:	10 92 94 00 	sts	0x0094, r1
-	sei();							//Enable interrupts	
     1260:	78 94       	sei
     1262:	08 95       	ret
 
 00001264 <_ZN7systime13getSysTimeRawEv>:
-//FUNCTION  : getSysTimeRaw()
-//INPUT		: NONE
-//OUTPUT	: returns time ticks (raw counter values with overflows) after initialisation of sysTime
-unsigned long  getSysTimeRaw()			//returns the raw countervalue
-{
-	unsigned long temptime=TCNT3;					//get counter value at this state
     1264:	20 91 94 00 	lds	r18, 0x0094
     1268:	30 91 95 00 	lds	r19, 0x0095
-	return overflows*65536+temptime;				
     126c:	80 91 6c 02 	lds	r24, 0x026C
     1270:	90 91 6d 02 	lds	r25, 0x026D
     1274:	a0 91 6e 02 	lds	r26, 0x026E
@@ -3766,16 +2648,9 @@ unsigned long  getSysTimeRaw()			//returns the raw countervalue
     1288:	73 1f       	adc	r23, r19
     128a:	81 1d       	adc	r24, r1
     128c:	91 1d       	adc	r25, r1
-}
     128e:	08 95       	ret
 
 00001290 <_ZN7systime10getSysTimeEv>:
-//FUNCTION  : getSysTime()
-//INPUT		: NONE
-//OUTPUT	: returns time in milli Seconds after initialisatin of sysTime
-unsigned long getSysTime()		
-{
-	return (unsigned long)(getSysTimeRaw()*0.06944);
     1290:	e9 df       	rcall	.-46     	; 0x1264 <_ZN7systime13getSysTimeRawEv>
     1292:	9b d0       	rcall	.+310    	; 0x13ca <__floatunsisf>
     1294:	2f e8       	ldi	r18, 0x8F	; 143
@@ -3784,7 +2659,6 @@ unsigned long getSysTime()
     129a:	5d e3       	ldi	r21, 0x3D	; 61
     129c:	24 d1       	rcall	.+584    	; 0x14e6 <__mulsf3>
     129e:	69 c0       	rjmp	.+210    	; 0x1372 <__fixunssfsi>
-}
     12a0:	08 95       	ret
 
 000012a2 <__divsf3>:
