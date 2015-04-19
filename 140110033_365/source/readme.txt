@@ -12,3 +12,5 @@ Steps to  build the program:
 	3. after copying files go to solution explorer, right click on prj_name -select add- existing items
 		select all items except Debug(if exists) and .cppproj file.
 	4. now try compiling project.
+	
+	video link : https://youtu.be/RYYRaYtafBg
