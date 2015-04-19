@@ -14,7 +14,11 @@ Member3 Roll Number: 14D110008
 Member4 Name: Jenil P Shah
 Member4 Roll Number: 14D170008
 YouTube Video Link: 
+Setting up from github : 
 https://www.youtube.com/watch?v=g7iffxrT_wA
+setting up from moodle :
 https://www.youtube.com/watch?v=4IUK39E45MU&feature=youtu.be
+
+Working bot :
 
 https://youtu.be/3qNhCuxCqiQ
